@@ -25,4 +25,12 @@ public class WarpCommand implements CommandExecutor {
         return false;
     }
 
+    private boolean createNewWarp(Player p, String warp) {
+        return false;
+    }
+
+    private boolean deleteWarp(Player p, String warp) {
+        return false;
+    }
+
 }

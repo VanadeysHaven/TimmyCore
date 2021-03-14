@@ -1,6 +1,6 @@
 package me.Cooltimmetje.TimmyCore.Utilities.TableUtilities;
 
-public class TableDrawer {
+public final class TableDrawer {
 
     private static final boolean DEFAULT_DRAW_HEADER = true;
     private static final int DEFAULT_PADDING = 1;

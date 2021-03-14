@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 
-public class TableRow {
+public final class TableRow {
 
     private ArrayList<String> strings;
 

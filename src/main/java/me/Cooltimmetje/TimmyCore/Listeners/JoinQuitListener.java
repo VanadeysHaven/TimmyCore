@@ -3,16 +3,14 @@ package me.Cooltimmetje.TimmyCore.Listeners;
 import me.Cooltimmetje.TimmyCore.Database.Query;
 import me.Cooltimmetje.TimmyCore.Database.QueryExecutor;
 import me.Cooltimmetje.TimmyCore.Utilities.StringUtilities;
-import org.bukkit.event.Cancellable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.PlayerLeashEntityEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.sql.SQLException;
 
-public class JoinQuitListener implements Listener {
+public final class JoinQuitListener implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {

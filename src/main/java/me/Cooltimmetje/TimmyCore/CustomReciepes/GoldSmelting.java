@@ -7,9 +7,7 @@ import org.bukkit.inventory.BlastingRecipe;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
-import javax.naming.Name;
-
-public class GoldSmelting {
+public final class GoldSmelting {
 
     public GoldSmelting(Server server, Plugin plugin){
         server.addRecipe(new BlastingRecipe(new NamespacedKey(plugin, "gold_helmet_to_ingots"), new ItemStack(Material.GOLD_INGOT, 5), Material.GOLDEN_HELMET, 0, 1500));

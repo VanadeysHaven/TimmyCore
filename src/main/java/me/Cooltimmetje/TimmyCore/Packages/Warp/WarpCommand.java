@@ -1,7 +1,5 @@
 package me.Cooltimmetje.TimmyCore.Packages.Warp;
 
-import com.mysql.cj.exceptions.WrongArgumentException;
-import me.Cooltimmetje.TimmyCore.Packages.Warp.Exceptions.NotOwnerOfWarpException;
 import me.Cooltimmetje.TimmyCore.Packages.Warp.Exceptions.WarpNotPublicException;
 import me.Cooltimmetje.TimmyCore.Utilities.MessageUtilities;
 import org.bukkit.Location;
@@ -56,6 +54,7 @@ public final class WarpCommand implements CommandExecutor {
     }
 
     private boolean teleportToWarp(Player p, String name){ //1
+        name = name.toLowerCase();
         Warp warp = manager.getWarp(name);
         if(!warp.isPublic() && !warp.isOwner(p) && !p.isOp())
             throw new WarpNotPublicException(warp.getName());
@@ -66,6 +65,7 @@ public final class WarpCommand implements CommandExecutor {
     }
 
     private boolean createNewWarp(Player p, String warp){ //2
+        warp = warp.toLowerCase();
         Location location = p.getLocation();
         manager.addWarp(warp, location, p, true);
 
@@ -75,12 +75,14 @@ public final class WarpCommand implements CommandExecutor {
     }
 
     private boolean deleteWarp(Player p, String warp){ //2
+        warp = warp.toLowerCase();
         manager.deleteWarp(warp, p);
         MessageUtilities.sendMessage(p, "Warp", "&aWarp &b" + warp + " &ahas been deleted.");
         return true;
     }
 
     private boolean changePublicState(Player p, String warp, String newPublic){ //3
+        warp = warp.toLowerCase();
         boolean newPub = Boolean.parseBoolean(newPublic);
         manager.setWarpPublic(warp, p, newPub);
         MessageUtilities.sendMessage(p, "Warp", "&aWarp &b" + warp + " &ahas been set to " + (newPub ? "&2public" : "&cprivate") + ".");

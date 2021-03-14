@@ -8,3 +8,6 @@ commands:
   warp:
     description: Warping
     usage: /<command> <warpname>
+  nick:
+    description: changing nicknames
+    usage: /<command> <new nick>

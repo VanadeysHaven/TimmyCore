@@ -1,5 +1,6 @@
 package me.Cooltimmetje.TimmyCore;
 
+import me.Cooltimmetje.TimmyCore.Commands.NicknameCommand;
 import me.Cooltimmetje.TimmyCore.Data.Database.HikariManager;
 import me.Cooltimmetje.TimmyCore.Data.Profiles.User.Settings.Setting;
 import me.Cooltimmetje.TimmyCore.Listeners.ChatListener;
@@ -7,12 +8,16 @@ import me.Cooltimmetje.TimmyCore.Listeners.DeathListener;
 import me.Cooltimmetje.TimmyCore.Listeners.JoinQuitListener;
 import me.Cooltimmetje.TimmyCore.Packages.Warp.WarpCommand;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Main extends JavaPlugin {
 
+    private static Plugin plugin;
+
     @Override
     public void onEnable() {
+        plugin = this;
         getLogger().info("Loading...");
 
         getLogger().info("Loading config..."); //TODO: make cleaner
@@ -34,6 +39,7 @@ public final class Main extends JavaPlugin {
 
         getLogger().info("Registering commands");
         getCommand("warp").setExecutor(new WarpCommand());
+        getCommand("nick").setExecutor(new NicknameCommand());
 
 //        getLogger().info("Registering crafting recipes...");
 //        new GoldSmelting(getServer(), this);
@@ -53,6 +59,10 @@ public final class Main extends JavaPlugin {
     public void registerEvent(Listener listener){
         getLogger().info("Registering listener " + listener.toString());
         getServer().getPluginManager().registerEvents(listener, this);
+    }
+
+    public static Plugin getPlugin(){
+        return plugin;
     }
 
 

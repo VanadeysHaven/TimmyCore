@@ -1,5 +1,6 @@
 package me.Cooltimmetje.TimmyCore.Data.Profiles.User;
 
+import org.bukkit.entity.Player;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,20 +25,20 @@ public class ProfileManager {
         players = new ArrayList<>();
     }
 
-    public CorePlayer getUser(String uuid){
-        logger.info("Requested player profile for uuid " + uuid);
-        CorePlayer cp = getPlayer(uuid);
+    public CorePlayer getUser(Player p){
+        logger.info("Requested player profile for uuid " + p.getUniqueId().toString());
+        CorePlayer cp = getPlayer(p.getUniqueId().toString());
 
         if(cp == null){ //Doesn't exist, create new
             logger.info("Loading from database...");
-            cp = new CorePlayer(uuid);
+            cp = new CorePlayer(p);
             players.add(cp);
         }
 
         return cp;
     }
 
-    public CorePlayer getPlayer(String uuid){
+    private CorePlayer getPlayer(String uuid){
         for(CorePlayer cp : players)
             if(cp.getUuid().equals(uuid))
                 return cp;
@@ -45,7 +46,7 @@ public class ProfileManager {
         return null;
     }
 
-    public void unloadPlayer(String uuid){
+    public void unloadUser(String uuid){
         players.remove(getPlayer(uuid));
     }
 

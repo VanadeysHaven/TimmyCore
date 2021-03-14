@@ -13,16 +13,19 @@ import java.sql.SQLException;
 
 public final class JoinQuitListener implements Listener {
 
+    private static final ProfileManager pm = ProfileManager.getInstance();
+
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
-        event.setJoinMessage(StringUtilities.colorify(StringUtilities.formatMessageWithTag("Join", event.getPlayer().getDisplayName() + " joined the game.")));
         registerPlayer(event.getPlayer().getUniqueId().toString(), event.getPlayer().getName());
+        pm.getUser(event.getPlayer()).updateDisplayName();
+        event.setJoinMessage(StringUtilities.colorify(StringUtilities.formatMessageWithTag("Join", event.getPlayer().getDisplayName() + " joined the game.")));
     }
 
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
         event.setQuitMessage(StringUtilities.colorify(StringUtilities.formatMessageWithTag("Quit", event.getPlayer().getDisplayName() + " left the game.")));
-        ProfileManager.getInstance().unloadPlayer(event.getPlayer().getUniqueId().toString());
+        pm.unloadUser(event.getPlayer().getUniqueId().toString());
     }
 
     private void registerPlayer(String uuid, String name){

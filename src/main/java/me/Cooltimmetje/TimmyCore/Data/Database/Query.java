@@ -12,7 +12,7 @@ public enum Query {
     SELECT_ALL_SETTINGS_VALUES("select us.name, ush.value from user_has_settings ush join user_settings us on ush.setting_id = us.id where uuid=?;"),
     SELECT_ALL_SETTING_KEYS("select name from user_settings;"),
     INSERT_SETTING_KEY("insert ignore into user_settings(name) value (?);"),
-    UPDATE_SETTING_VALUE("insert into user_has_settings (setting_id, uuid, value) values ((select get_user_setting_id(?)),?,?) on duplicate key update value=?;"),
+    UPDATE_SETTING_VALUE("insert into user_has_settings (setting_id, uuid, value) values ((select id from user_settings where name=?),?,?) on duplicate key update value=?;"),
     DELETE_SETTING_VALUE("delete uhs from user_has_settings uhs join user_settings us on uhs.setting_id = us.id where uhs.uuid=? and us.name=?;"),
 
     //WARPS

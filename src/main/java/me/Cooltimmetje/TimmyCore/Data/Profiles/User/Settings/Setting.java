@@ -26,6 +26,10 @@ public enum Setting implements Data {
     }
 
     public static Setting getByDbReference(String reference){
+        for(Setting setting : values())
+            if(setting.getDbReference().equalsIgnoreCase(reference))
+                return setting;
+
         return null;
     }
 
@@ -36,7 +40,7 @@ public enum Setting implements Data {
             qe = new QueryExecutor(Query.SELECT_ALL_SETTING_KEYS);
             QueryResult qr = qe.executeQuery();
             while(qr.nextResult()){
-                settings.add(qr.getString("setting_name"));
+                settings.add(qr.getString("name"));
             }
         } catch (SQLException e){
             e.printStackTrace();
@@ -98,11 +102,11 @@ public enum Setting implements Data {
 
     @Override
     public Query getDeleteQuery() {
-        return null;
+        return Query.DELETE_SETTING_VALUE;
     }
 
     @Override
     public Query getUpdateQuery() {
-        return null;
+        return Query.UPDATE_SETTING_VALUE;
     }
 }

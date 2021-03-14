@@ -2,8 +2,8 @@ package me.Cooltimmetje.TimmyCore.Packages.Warp;
 
 import lombok.Getter;
 import lombok.Setter;
-import me.Cooltimmetje.TimmyCore.Database.Query;
-import me.Cooltimmetje.TimmyCore.Database.QueryExecutor;
+import me.Cooltimmetje.TimmyCore.Data.Database.Query;
+import me.Cooltimmetje.TimmyCore.Data.Database.QueryExecutor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 

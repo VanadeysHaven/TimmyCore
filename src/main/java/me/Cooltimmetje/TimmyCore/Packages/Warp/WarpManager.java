@@ -1,8 +1,8 @@
 package me.Cooltimmetje.TimmyCore.Packages.Warp;
 
-import me.Cooltimmetje.TimmyCore.Database.Query;
-import me.Cooltimmetje.TimmyCore.Database.QueryExecutor;
-import me.Cooltimmetje.TimmyCore.Database.QueryResult;
+import me.Cooltimmetje.TimmyCore.Data.Database.Query;
+import me.Cooltimmetje.TimmyCore.Data.Database.QueryExecutor;
+import me.Cooltimmetje.TimmyCore.Data.Database.QueryResult;
 import me.Cooltimmetje.TimmyCore.Packages.Warp.Exceptions.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

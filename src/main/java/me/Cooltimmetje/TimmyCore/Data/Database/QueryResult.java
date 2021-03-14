@@ -1,4 +1,4 @@
-package me.Cooltimmetje.TimmyCore.Database;
+package me.Cooltimmetje.TimmyCore.Data.Database;
 
 import me.Cooltimmetje.TimmyCore.Utilities.TableUtilities.TableArrayGenerator;
 import me.Cooltimmetje.TimmyCore.Utilities.TableUtilities.TableDrawer;

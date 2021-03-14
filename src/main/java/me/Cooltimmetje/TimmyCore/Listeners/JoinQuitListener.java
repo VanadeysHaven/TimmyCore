@@ -1,7 +1,8 @@
 package me.Cooltimmetje.TimmyCore.Listeners;
 
-import me.Cooltimmetje.TimmyCore.Database.Query;
-import me.Cooltimmetje.TimmyCore.Database.QueryExecutor;
+import me.Cooltimmetje.TimmyCore.Data.Database.Query;
+import me.Cooltimmetje.TimmyCore.Data.Database.QueryExecutor;
+import me.Cooltimmetje.TimmyCore.Data.Profiles.User.ProfileManager;
 import me.Cooltimmetje.TimmyCore.Utilities.StringUtilities;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -21,6 +22,7 @@ public final class JoinQuitListener implements Listener {
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
         event.setQuitMessage(StringUtilities.colorify(StringUtilities.formatMessageWithTag("Quit", event.getPlayer().getDisplayName() + " left the game.")));
+        ProfileManager.getInstance().unloadPlayer(event.getPlayer().getUniqueId().toString());
     }
 
     private void registerPlayer(String uuid, String name){

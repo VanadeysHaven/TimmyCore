@@ -1,7 +1,7 @@
 package me.Cooltimmetje.TimmyCore;
 
-import me.Cooltimmetje.TimmyCore.CustomReciepes.GoldSmelting;
-import me.Cooltimmetje.TimmyCore.Database.HikariManager;
+import me.Cooltimmetje.TimmyCore.Data.Database.HikariManager;
+import me.Cooltimmetje.TimmyCore.Data.Profiles.User.Settings.Setting;
 import me.Cooltimmetje.TimmyCore.Listeners.ChatListener;
 import me.Cooltimmetje.TimmyCore.Listeners.DeathListener;
 import me.Cooltimmetje.TimmyCore.Listeners.JoinQuitListener;
@@ -14,6 +14,7 @@ public final class Main extends JavaPlugin {
     @Override
     public void onEnable() {
         getLogger().info("Loading...");
+
         getLogger().info("Loading config..."); //TODO: make cleaner
         this.saveDefaultConfig();
         String databaseHost = this.getConfig().getString("mysql.host");
@@ -24,6 +25,9 @@ public final class Main extends JavaPlugin {
 
         getLogger().info("Setting up DB connection...");
         HikariManager.setup(databaseHost, databasePort, databaseName, databaseUser, databasePass);
+
+        getLogger().info("Updating database...");
+        Setting.saveToDatabase();
 
         getLogger().info("Registering listeners...");
         registerEvent(new DeathListener(), new JoinQuitListener(), new ChatListener());
@@ -38,6 +42,7 @@ public final class Main extends JavaPlugin {
     @Override
     public void onDisable() {
         getLogger().info("Shutting down...");
+        HikariManager.close();
     }
 
     public void registerEvent(Listener... listeners){

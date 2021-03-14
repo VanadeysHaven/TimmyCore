@@ -1,4 +1,4 @@
-package me.Cooltimmetje.TimmyCore.Database;
+package me.Cooltimmetje.TimmyCore.Data.Database;
 
 import com.zaxxer.hikari.HikariDataSource;
 
@@ -20,6 +20,10 @@ public final class HikariManager {
 
     static Connection getConnection() throws SQLException {
         return hikari.getConnection();
+    }
+
+    public static void close(){
+        hikari.close();
     }
 
 }

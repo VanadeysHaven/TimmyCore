@@ -2,3 +2,4 @@
 /target/
 .idea
 TimmyCore.iml
+dependency-reduced-pom.xml

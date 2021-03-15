@@ -1,5 +1,6 @@
 package me.Cooltimmetje.TimmyCore.Data.Profiles.User;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,8 +47,14 @@ public class ProfileManager {
         return null;
     }
 
-    public void unloadUser(String uuid){
-        players.remove(getPlayer(uuid));
+    public void unload(String uuid){
+        CorePlayer cp = getPlayer(uuid); assert cp != null;
+        cp.unload();
+        players.remove(cp);
     }
 
+    public void unload() {
+        for(Player p : Bukkit.getOnlinePlayers())
+            unload(p.getUniqueId().toString());
+    }
 }

@@ -2,17 +2,22 @@ package me.Cooltimmetje.TimmyCore;
 
 import me.Cooltimmetje.TimmyCore.Commands.NicknameCommand;
 import me.Cooltimmetje.TimmyCore.Data.Database.HikariManager;
+import me.Cooltimmetje.TimmyCore.Data.Profiles.User.ProfileManager;
 import me.Cooltimmetje.TimmyCore.Data.Profiles.User.Settings.Setting;
 import me.Cooltimmetje.TimmyCore.Listeners.ChatListener;
 import me.Cooltimmetje.TimmyCore.Listeners.DeathListener;
 import me.Cooltimmetje.TimmyCore.Listeners.JoinQuitListener;
 import me.Cooltimmetje.TimmyCore.Listeners.ServerPingListener;
 import me.Cooltimmetje.TimmyCore.Packages.Warp.WarpCommand;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Main extends JavaPlugin {
+
+    private static final ProfileManager pm = ProfileManager.getInstance();
 
     private static Plugin plugin;
 
@@ -42,6 +47,10 @@ public final class Main extends JavaPlugin {
         getCommand("warp").setExecutor(new WarpCommand());
         getCommand("nick").setExecutor(new NicknameCommand());
 
+        getLogger().info("Loading players...");
+        for(Player p : Bukkit.getOnlinePlayers())
+            pm.getUser(p); //We just need to load here, nothing else.
+
 //        getLogger().info("Registering crafting recipes...");
 //        new GoldSmelting(getServer(), this);
     }
@@ -50,6 +59,7 @@ public final class Main extends JavaPlugin {
     public void onDisable() {
         getLogger().info("Shutting down...");
         HikariManager.close();
+        pm.unload();
     }
 
     public void registerEvent(Listener... listeners){

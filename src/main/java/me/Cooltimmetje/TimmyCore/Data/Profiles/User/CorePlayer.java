@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 public class CorePlayer {
 
     private static final Logger logger = LoggerFactory.getLogger(ProfileManager.class);
+    private static final ProfileManager pm = ProfileManager.getInstance();
 
     private Player player;
     private SettingsContainer settings;
@@ -19,6 +20,8 @@ public class CorePlayer {
     public CorePlayer(Player player){
         this.player = player;
         this.settings = new SettingsSapling(getUuid()).grow();
+
+        updateDisplayName();
     }
 
     public String getUuid(){
@@ -35,4 +38,7 @@ public class CorePlayer {
         player.setPlayerListName(nickname);
     }
 
+    public void unload() {
+
+    }
 }

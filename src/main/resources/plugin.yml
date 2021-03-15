@@ -11,3 +11,6 @@ commands:
   nick:
     description: changing nicknames
     usage: /<command> <new nick>
+  rank:
+    description: changing ranks
+    usage: /<command> <player> <new rank>

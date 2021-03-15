@@ -40,7 +40,7 @@ public class NicknameCommand implements CommandExecutor {
             MessageUtilities.sendMessage(p, "Nick", "&aYour nickname has been updated to &b" + args[0]);
         }
 
-        cp.updateDisplayName();
+        cp.updateAppearance();
 
         return true;
     }

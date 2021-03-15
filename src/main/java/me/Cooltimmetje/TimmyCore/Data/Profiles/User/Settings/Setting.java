@@ -13,7 +13,8 @@ import java.util.ArrayList;
 @Getter
 public enum Setting implements Data {
 
-    NICKNAME("nickname", ValueType.STRING, "");
+    NICKNAME("nickname", ValueType.STRING, ""),
+    RANK("rank", ValueType.STRING, "NEUROCITIZEN");
 
     private String dbReference;
     private ValueType type;

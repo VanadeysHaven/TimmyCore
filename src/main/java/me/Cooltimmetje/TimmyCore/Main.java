@@ -8,6 +8,7 @@ import me.Cooltimmetje.TimmyCore.Listeners.ChatListener;
 import me.Cooltimmetje.TimmyCore.Listeners.DeathListener;
 import me.Cooltimmetje.TimmyCore.Listeners.JoinQuitListener;
 import me.Cooltimmetje.TimmyCore.Listeners.ServerPingListener;
+import me.Cooltimmetje.TimmyCore.Packages.Rank.RankCommand;
 import me.Cooltimmetje.TimmyCore.Packages.Warp.WarpCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -46,6 +47,7 @@ public final class Main extends JavaPlugin {
         getLogger().info("Registering commands");
         getCommand("warp").setExecutor(new WarpCommand());
         getCommand("nick").setExecutor(new NicknameCommand());
+        getCommand("rank").setExecutor(new RankCommand());
 
         getLogger().info("Loading players...");
         for(Player p : Bukkit.getOnlinePlayers())

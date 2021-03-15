@@ -9,7 +9,7 @@ create table users (
 );
 
 create table user_settings (
-    id int primary key,
+    id int primary key auto_increment,
     name varchar(40)
 );
 
@@ -34,16 +34,6 @@ create table warps (
     is_public boolean,
     foreign key (owner) references users(uuid)
 );
-
-delimiter //
-
-create function get_user_setting_id(settingReference text)
-returns int
-begin
-    return (select id from user_settings where name=settingReference);
-end //
-
-delimiter ;
 
 insert into users(uuid, username) value (?,?) on duplicate key update username=?;
 insert into warps(name, world, x, y, z, yaw, pitch, owner, is_public) value (?,?,?,?,?,?,?,?,?) on duplicate key update is_public=?;

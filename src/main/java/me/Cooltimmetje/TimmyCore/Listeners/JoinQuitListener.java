@@ -19,12 +19,12 @@ public final class JoinQuitListener implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         registerPlayer(event.getPlayer().getUniqueId().toString(), event.getPlayer().getName());
         pm.getUser(event.getPlayer()); //We only need to load here, nothing else.
-        event.setJoinMessage(StringUtilities.colorify(StringUtilities.formatMessageWithTag("Join", event.getPlayer().getDisplayName() + " joined the game.")));
+        event.setJoinMessage(StringUtilities.colorify(StringUtilities.formatMessageWithTag("Join", event.getPlayer().getDisplayName() + " &ajoined the game.")));
     }
 
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
-        event.setQuitMessage(StringUtilities.colorify(StringUtilities.formatMessageWithTag("Quit", event.getPlayer().getDisplayName() + " left the game.")));
+        event.setQuitMessage(StringUtilities.colorify(StringUtilities.formatMessageWithTag("Quit", event.getPlayer().getDisplayName() + " &aleft the game.")));
         pm.unload(event.getPlayer().getUniqueId().toString());
     }
 

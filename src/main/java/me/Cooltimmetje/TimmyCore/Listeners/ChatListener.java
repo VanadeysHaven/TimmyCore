@@ -9,7 +9,7 @@ public final class ChatListener implements Listener {
 
     @EventHandler
     public void onChat(AsyncPlayerChatEvent event){
-        event.setFormat(StringUtilities.colorify("&a%1$s &8» &f%2$s"));
+        event.setFormat(StringUtilities.colorify("%1$s &8» &f%2$s"));
     }
 
 }

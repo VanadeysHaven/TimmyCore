@@ -6,6 +6,7 @@ import me.Cooltimmetje.TimmyCore.Data.Profiles.User.Settings.Setting;
 import me.Cooltimmetje.TimmyCore.Listeners.ChatListener;
 import me.Cooltimmetje.TimmyCore.Listeners.DeathListener;
 import me.Cooltimmetje.TimmyCore.Listeners.JoinQuitListener;
+import me.Cooltimmetje.TimmyCore.Listeners.ServerPingListener;
 import me.Cooltimmetje.TimmyCore.Packages.Warp.WarpCommand;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
@@ -35,7 +36,7 @@ public final class Main extends JavaPlugin {
         Setting.saveToDatabase();
 
         getLogger().info("Registering listeners...");
-        registerEvent(new DeathListener(), new JoinQuitListener(), new ChatListener());
+        registerEvent(new DeathListener(), new JoinQuitListener(), new ChatListener(), new ServerPingListener());
 
         getLogger().info("Registering commands");
         getCommand("warp").setExecutor(new WarpCommand());

@@ -1,6 +1,7 @@
 package me.Cooltimmetje.TimmyCore;
 
 import me.Cooltimmetje.TimmyCore.Commands.NicknameCommand;
+import me.Cooltimmetje.TimmyCore.Commands.PronounsCommand;
 import me.Cooltimmetje.TimmyCore.Data.Database.HikariManager;
 import me.Cooltimmetje.TimmyCore.Data.Profiles.User.ProfileManager;
 import me.Cooltimmetje.TimmyCore.Data.Profiles.User.Settings.Setting;
@@ -48,6 +49,7 @@ public final class Main extends JavaPlugin {
         getCommand("warp").setExecutor(new WarpCommand());
         getCommand("nick").setExecutor(new NicknameCommand());
         getCommand("rank").setExecutor(new RankCommand());
+        getCommand("pronouns").setExecutor(new PronounsCommand());
 
         getLogger().info("Loading players...");
         for(Player p : Bukkit.getOnlinePlayers())

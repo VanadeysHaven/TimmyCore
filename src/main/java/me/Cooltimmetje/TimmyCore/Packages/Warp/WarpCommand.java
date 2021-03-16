@@ -24,7 +24,6 @@ public final class WarpCommand implements CommandExecutor {
             sender.sendMessage("Haha... NO.");
             return false;
         }
-
         Player p = (Player) sender;
 
         try {

@@ -36,25 +36,44 @@ public class CorePlayer {
     }
 
     public void updateAppearance(){
-        logger.info("Updating Displayname...");
         String nickname = settings.getString(Setting.NICKNAME);
-        if(nickname.equals(""))
+        boolean setNickname = true;
+        if(nickname.equals("")) {
+            setNickname = false;
             nickname = player.getName();
+        }
 
         Rank rank = getSettings().getRank();
         nickname = StringUtilities.colorify("&" + rank.getColorCode() + nickname);
         String rankTag = StringUtilities.colorify("&8[&" + rank.getColorCode() + rank.getRankName() + "&8]");
+        String pronouns = getSettings().getString(Setting.PRONOUNS);
+        if(!pronouns.equals(""))
+            pronouns = StringUtilities.colorify("&8[&b" + getSettings().getString(Setting.PRONOUNS) + "&8]");
 
-        player.setDisplayName(rankTag + " " + nickname);
-        player.setPlayerListName(rankTag + " " + nickname);
+        setDisplayName(nickname);
+        setNamePlate(rankTag, nickname, setNickname);
+        setPlayerListName(rankTag, nickname, pronouns);
+    }
 
+    private void setDisplayName(String nickname){
+        player.setDisplayName(nickname);
+    }
+
+    private void setNamePlate(String rankTag, String nickname, boolean setNickname){
         ScoreboardManager manager = Bukkit.getScoreboardManager(); assert manager != null;
         Scoreboard board = manager.getMainScoreboard();
         if(team == null)
             team = board.registerNewTeam(player.getName());
+
         team.setPrefix(StringUtilities.colorify(rankTag + " "));
-        team.setSuffix(StringUtilities.colorify(" &8[" + nickname + "&8]"));
+        if(setNickname)
+            team.setSuffix(StringUtilities.colorify(" &8[" + nickname + "&8]"));
+
         team.addPlayer(player);
+    }
+
+    private void setPlayerListName(String rankTag, String nickname, String pronouns){
+        player.setPlayerListName(rankTag + " " + nickname + " " + pronouns);
     }
 
     public void unload() {

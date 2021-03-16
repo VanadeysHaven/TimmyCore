@@ -2,7 +2,9 @@ package me.Cooltimmetje.TimmyCore.Listeners;
 
 import me.Cooltimmetje.TimmyCore.Data.Database.Query;
 import me.Cooltimmetje.TimmyCore.Data.Database.QueryExecutor;
+import me.Cooltimmetje.TimmyCore.Data.Profiles.User.CorePlayer;
 import me.Cooltimmetje.TimmyCore.Data.Profiles.User.ProfileManager;
+import me.Cooltimmetje.TimmyCore.Data.Profiles.User.Settings.Setting;
 import me.Cooltimmetje.TimmyCore.Utilities.StringUtilities;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -18,13 +20,14 @@ public final class JoinQuitListener implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         registerPlayer(event.getPlayer().getUniqueId().toString(), event.getPlayer().getName());
-        pm.getUser(event.getPlayer()); //We only need to load here, nothing else.
-        event.setJoinMessage(StringUtilities.colorify(StringUtilities.formatMessageWithTag("Join", event.getPlayer().getDisplayName() + " &ajoined the game.")));
+        CorePlayer cp = pm.getUser(event.getPlayer());
+        event.setJoinMessage(StringUtilities.colorify(StringUtilities.formatMessageWithTag("Join", cp.getSettings().getRank().formatTag() + " " + event.getPlayer().getDisplayName() + " &8[&b" + cp.getSettings().getString(Setting.PRONOUNS) + "&8] &ajoined the game.")));
     }
 
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
-        event.setQuitMessage(StringUtilities.colorify(StringUtilities.formatMessageWithTag("Quit", event.getPlayer().getDisplayName() + " &aleft the game.")));
+        CorePlayer cp = pm.getUser(event.getPlayer());
+        event.setQuitMessage(StringUtilities.colorify(StringUtilities.formatMessageWithTag("Quit", cp.getSettings().getRank().formatTag() + " " + event.getPlayer().getDisplayName() + " &8[&b" + cp.getSettings().getString(Setting.PRONOUNS) + "&8] &aleft the game.")));
         pm.unload(event.getPlayer().getUniqueId().toString());
     }
 

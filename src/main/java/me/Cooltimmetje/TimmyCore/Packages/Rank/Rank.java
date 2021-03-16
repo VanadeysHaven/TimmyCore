@@ -1,6 +1,7 @@
 package me.Cooltimmetje.TimmyCore.Packages.Rank;
 
 import lombok.Getter;
+import me.Cooltimmetje.TimmyCore.Utilities.StringUtilities;
 
 @Getter
 public enum Rank {
@@ -17,6 +18,10 @@ public enum Rank {
     Rank(String colorCode, String rankName){
         this.colorCode = colorCode;
         this.rankName = rankName;
+    }
+
+    public String formatTag(){
+        return StringUtilities.colorify("&8[&" + colorCode + rankName + "&8]&r");
     }
 
 }

@@ -21,14 +21,22 @@ public final class JoinQuitListener implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         registerPlayer(event.getPlayer().getUniqueId().toString(), event.getPlayer().getName());
         CorePlayer cp = pm.getUser(event.getPlayer());
-        event.setJoinMessage(StringUtilities.colorify(StringUtilities.formatMessageWithTag("Join", cp.getSettings().getRank().formatTag() + " " + event.getPlayer().getDisplayName() + " &8[&b" + cp.getSettings().getString(Setting.PRONOUNS) + "&8] &ajoined the game.")));
+        event.setJoinMessage(StringUtilities.colorify(StringUtilities.formatMessageWithTag("Join", formatName(cp) + " &ajoined the game.")));
     }
 
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
         CorePlayer cp = pm.getUser(event.getPlayer());
-        event.setQuitMessage(StringUtilities.colorify(StringUtilities.formatMessageWithTag("Quit", cp.getSettings().getRank().formatTag() + " " + event.getPlayer().getDisplayName() + " &8[&b" + cp.getSettings().getString(Setting.PRONOUNS) + "&8] &aleft the game.")));
+        event.setQuitMessage(StringUtilities.colorify(StringUtilities.formatMessageWithTag("Quit", formatName(cp) + " &aleft the game.")));
         pm.unload(event.getPlayer().getUniqueId().toString());
+    }
+
+    public String formatName(CorePlayer cp){
+        String s = cp.getSettings().getRank().formatTag() + " " + cp.getPlayer().getDisplayName() + "&r";
+        if(!cp.getSettings().getString(Setting.PRONOUNS).equals(""))
+            s += " &8[&b" + cp.getSettings().getString(Setting.PRONOUNS) + "&8]";
+
+        return s;
     }
 
     private void registerPlayer(String uuid, String name){

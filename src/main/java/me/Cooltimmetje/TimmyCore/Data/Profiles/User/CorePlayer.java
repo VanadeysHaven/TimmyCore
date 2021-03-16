@@ -73,7 +73,7 @@ public class CorePlayer {
     }
 
     private void setPlayerListName(String rankTag, String nickname, String pronouns){
-        player.setPlayerListName(rankTag + " " + nickname + " " + pronouns);
+        player.setPlayerListName(StringUtilities.colorify(rankTag + " " + nickname + "&r " + pronouns));
     }
 
     public void unload() {

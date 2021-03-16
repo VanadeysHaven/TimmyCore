@@ -27,7 +27,7 @@ public class ProfileManager {
     }
 
     public CorePlayer getUser(Player p){
-        logger.info("Requested player profile for uuid " + p.getUniqueId().toString());
+//        logger.info("Requested player profile for uuid " + p.getUniqueId().toString());
         CorePlayer cp = getPlayer(p.getUniqueId().toString());
 
         if(cp == null){ //Doesn't exist, create new

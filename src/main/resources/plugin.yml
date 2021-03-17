@@ -19,3 +19,5 @@ commands:
     usage: /<command> <new pronouns>
 depend:
   - DiscordSRV
+  - Citizens
+  - HolographicDisplays

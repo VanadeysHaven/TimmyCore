@@ -8,7 +8,7 @@ public enum Rank {
 
     NEUROCITIZEN ("3", "Neurocitizen"),
     MOD          ("2", "Mod"         ),
-    OWNER        ("c", "Owner"       ),
+    ADMIN        ("c", "Admin"       ),
     SPARKED      ("e", "Sparked"     ),
     SERVER_DEV   ("6", "Developer"   );
 

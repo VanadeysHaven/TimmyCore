@@ -17,3 +17,5 @@ commands:
   pronouns:
     description: changing pronouns
     usage: /<command> <new pronouns>
+depend:
+  - DiscordSRV

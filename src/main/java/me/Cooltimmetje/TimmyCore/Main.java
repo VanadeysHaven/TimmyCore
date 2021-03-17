@@ -1,11 +1,13 @@
 package me.Cooltimmetje.TimmyCore;
 
+import github.scarsz.discordsrv.DiscordSRV;
 import me.Cooltimmetje.TimmyCore.Commands.NicknameCommand;
 import me.Cooltimmetje.TimmyCore.Commands.PronounsCommand;
 import me.Cooltimmetje.TimmyCore.Data.Database.HikariManager;
 import me.Cooltimmetje.TimmyCore.Data.Profiles.User.ProfileManager;
 import me.Cooltimmetje.TimmyCore.Data.Profiles.User.Settings.Setting;
 import me.Cooltimmetje.TimmyCore.Listeners.*;
+import me.Cooltimmetje.TimmyCore.Packages.Discord.DiscordReady;
 import me.Cooltimmetje.TimmyCore.Packages.Rank.RankCommand;
 import me.Cooltimmetje.TimmyCore.Packages.Warp.WarpCommand;
 import org.bukkit.Bukkit;
@@ -17,6 +19,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class Main extends JavaPlugin {
 
     private static final ProfileManager pm = ProfileManager.getInstance();
+    private static final DiscordReady discordReadyListener = new DiscordReady();
 
     private static Plugin plugin;
 
@@ -41,6 +44,7 @@ public final class Main extends JavaPlugin {
 
         getLogger().info("Registering listeners...");
         registerEvent(new DeathListener(), new JoinQuitListener(), new ChatListener(), new ServerPingListener(), new EntityExplodeListener());
+        DiscordSRV.api.subscribe(discordReadyListener);
 
         getLogger().info("Registering commands");
         getCommand("warp").setExecutor(new WarpCommand());
@@ -61,6 +65,7 @@ public final class Main extends JavaPlugin {
         getLogger().info("Shutting down...");
         HikariManager.close();
         pm.unload();
+        DiscordSRV.api.unsubscribe(discordReadyListener);
     }
 
     public void registerEvent(Listener... listeners){
@@ -76,6 +81,8 @@ public final class Main extends JavaPlugin {
     public static Plugin getPlugin(){
         return plugin;
     }
+
+
 
 
 }

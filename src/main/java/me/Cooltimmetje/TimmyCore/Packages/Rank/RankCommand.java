@@ -9,7 +9,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class RankCommand implements CommandExecutor {
+public final class RankCommand implements CommandExecutor {
 
     private static final ProfileManager pm = ProfileManager.getInstance();
 

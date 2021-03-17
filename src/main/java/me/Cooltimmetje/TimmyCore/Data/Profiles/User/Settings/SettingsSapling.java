@@ -7,7 +7,7 @@ import me.Cooltimmetje.TimmyCore.Data.Database.QueryResult;
 import java.sql.SQLException;
 import java.util.HashMap;
 
-public class SettingsSapling {
+public final class SettingsSapling {
 
     private String uuid;
     private HashMap<Setting,String> settings;

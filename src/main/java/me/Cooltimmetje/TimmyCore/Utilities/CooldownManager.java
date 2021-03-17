@@ -3,7 +3,7 @@ package me.Cooltimmetje.TimmyCore.Utilities;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class CooldownManager {
+public final class CooldownManager {
 
     private static ArrayList<CooldownManager> managers = new ArrayList<>();
 

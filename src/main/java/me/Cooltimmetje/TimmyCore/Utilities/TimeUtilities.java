@@ -2,7 +2,7 @@ package me.Cooltimmetje.TimmyCore.Utilities;
 
 import java.text.MessageFormat;
 
-public class TimeUtilities {
+public final class TimeUtilities {
 
     public static String formatTime(long millisRemaining){
         long time = millisRemaining / 1000;

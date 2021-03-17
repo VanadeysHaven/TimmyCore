@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 
-public class ProfileManager {
+public final class ProfileManager {
 
     private static ProfileManager instance;
 

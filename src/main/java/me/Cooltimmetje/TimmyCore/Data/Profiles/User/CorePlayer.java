@@ -15,7 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Getter
-public class CorePlayer {
+public final class CorePlayer {
 
     private static final Logger logger = LoggerFactory.getLogger(ProfileManager.class);
     private static final ProfileManager pm = ProfileManager.getInstance();

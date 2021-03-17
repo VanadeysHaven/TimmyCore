@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public final class WarpManager {
 
@@ -32,12 +33,20 @@ public final class WarpManager {
         throw new WarpDoesNotExistException(name);
     }
 
-    public String listWarpsForPlayer(Player p, boolean onlyOwned){
-        StringBuilder sb = new StringBuilder();
+    public List<String> listWarpsForPlayer(Player p, boolean onlyOwned){
+        ArrayList<String> list = new ArrayList<>();
         for(Warp warp : warps)
             if(p.isOp() || warp.isPublic() || p.getUniqueId().toString().equals(warp.getOwner()))
                 if(!onlyOwned || p.getUniqueId().toString().equals(warp.getOwner()))
-                    sb.append("&a, &b").append(warp.getName());
+                    list.add(warp.getName());
+
+        return list;
+    }
+
+    public String formatWarpsForPlayer(Player p, boolean onlyOwned){
+        StringBuilder sb = new StringBuilder();
+        for(String warp : listWarpsForPlayer(p, onlyOwned))
+            sb.append("&a, &b").append(warp);
 
         return sb.substring(4).trim();
     }

@@ -4,13 +4,15 @@ import me.Cooltimmetje.TimmyCore.Packages.Warp.Exceptions.WarpNotPublicException
 import me.Cooltimmetje.TimmyCore.Utilities.MessageUtilities;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.List;
 
-public final class WarpCommand implements CommandExecutor {
+public final class WarpCommand implements TabExecutor {
 
     private WarpManager manager;
 
@@ -48,7 +50,7 @@ public final class WarpCommand implements CommandExecutor {
     }
 
     private boolean listAllWarps(Player p, boolean listOwn){
-        MessageUtilities.sendMessage(p, "Warp", "&aAvailable warps: " + manager.listWarpsForPlayer(p, listOwn));
+        MessageUtilities.sendMessage(p, "Warp", "&aAvailable warps: " + manager.formatWarpsForPlayer(p, listOwn));
         return true;
     }
 
@@ -99,4 +101,38 @@ public final class WarpCommand implements CommandExecutor {
         }
     }
 
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) { //todo: optimization
+        List<String> list = new ArrayList<>();
+        if(!(sender instanceof Player)) {
+            return list;
+        }
+        Player p = (Player) sender;
+        switch (args.length){
+            case 1:
+                list.addAll(manager.listWarpsForPlayer(p, false));
+                list.add("create");
+                list.add("list");
+                list.add("listown");
+                list.add("delete");
+                list.add("setpublic");
+                if(p.isOp())
+                    list.add("reload");
+                return list;
+            case 2:
+                if(args[0].equalsIgnoreCase("create")) return list;
+                if(args[0].equalsIgnoreCase("delete") || args[0].equalsIgnoreCase("setpublic")) {
+                    list.addAll(manager.listWarpsForPlayer(p, !p.isOp()));
+                    return list;
+                }
+            case 3:
+                if(args[0].equalsIgnoreCase("setpublic")) {
+                    list.add("true");
+                    list.add("false");
+                }
+                return list;
+            default:
+                return list;
+        }
+    }
 }

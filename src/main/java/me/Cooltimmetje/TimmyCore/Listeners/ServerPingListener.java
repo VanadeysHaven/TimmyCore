@@ -11,7 +11,7 @@ import java.util.Random;
 
 public final class ServerPingListener implements Listener {
 
-    private static final String motd = "&8[&61.16.5&8] » &a&lN&aeuro&a&lC&araft\n&a&lNC &8» &b&o";
+    private static final String motd = "&8[&61.16.5&8] » &3&lN&3euro&a&lC&araft\n&3&lN&a&lC &8» &b&o";
 
     private enum Messages {
 

@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public final class WarpCommand implements TabExecutor {
@@ -72,6 +73,7 @@ public final class WarpCommand implements TabExecutor {
 
         String message = MessageFormat.format("&aNew warp &b{0} &acreated at &b({1},{2},{3})&a!", warp, location.getBlockX(), location.getBlockY(), location.getBlockZ());
         MessageUtilities.sendMessage(p, "Warp", message);
+        getListContainer().clear();
         return true;
     }
 
@@ -79,6 +81,7 @@ public final class WarpCommand implements TabExecutor {
         warp = warp.toLowerCase();
         manager.deleteWarp(warp, p);
         MessageUtilities.sendMessage(p, "Warp", "&aWarp &b" + warp + " &ahas been deleted.");
+        getListContainer().clear();
         return true;
     }
 
@@ -87,12 +90,14 @@ public final class WarpCommand implements TabExecutor {
         boolean newPub = Boolean.parseBoolean(newPublic);
         manager.setWarpPublic(warp, p, newPub);
         MessageUtilities.sendMessage(p, "Warp", "&aWarp &b" + warp + " &ahas been set to " + (newPub ? "&2public" : "&cprivate") + ".");
+        getListContainer().clear();
         return true;
     }
 
     private boolean reload(Player p){
         if(p.isOp()) {
             manager.loadAllWarps();
+            getListContainer().clear();
             MessageUtilities.sendMessage(p, "Warp", "&aAll warps have been reloaded.");
             return true;
         } else {
@@ -101,16 +106,19 @@ public final class WarpCommand implements TabExecutor {
         }
     }
 
-    @Override
-    public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) { //todo: optimization
-        List<String> list = new ArrayList<>();
-        if(!(sender instanceof Player)) {
-            return list;
+    private final class ListContainer {
+
+        private HashMap<String, List<String>> tpLists;
+        private HashMap<String, List<String>> editLists;
+
+        private ListContainer() {
+            tpLists = new HashMap<>();
+            editLists = new HashMap<>();
         }
-        Player p = (Player) sender;
-        switch (args.length){
-            case 1:
-                list.addAll(manager.listWarpsForPlayer(p, false));
+
+        public List<String> getTpList(Player p, String curArg){
+            if(!tpLists.containsKey(p.getUniqueId().toString())){
+                List<String> list = new ArrayList<>(manager.listWarpsForPlayer(p, false));
                 list.add("create");
                 list.add("list");
                 list.add("listown");
@@ -118,19 +126,58 @@ public final class WarpCommand implements TabExecutor {
                 list.add("setpublic");
                 if(p.isOp())
                     list.add("reload");
-                return list;
+
+                tpLists.put(p.getUniqueId().toString(), list);
+            }
+            return filter(tpLists.get(p.getUniqueId().toString()), curArg);
+        }
+
+        public List<String> getEditList(Player p, String curArg){
+            if(!editLists.containsKey(p.getUniqueId().toString())){
+                editLists.put(p.getUniqueId().toString(), manager.listWarpsForPlayer(p, !p.isOp()));
+            }
+            return filter(editLists.get(p.getUniqueId().toString()), curArg);
+        }
+
+        public List<String> filter(List<String> listInput, String curArg){
+            List<String> list = new ArrayList<>(listInput);
+            list.removeIf(s -> !s.startsWith(curArg));
+            return list;
+        }
+
+        public void clear(){
+            tpLists.clear();
+            editLists.clear();
+        }
+
+    }
+
+    private ListContainer instance;
+    private static final List<String> trueFalseList = new ArrayList<>(List.of("true", "false"));
+    private static final List<String> emptyList = new ArrayList<>();
+
+    private ListContainer getListContainer(){
+        if(instance == null)
+            instance = new ListContainer();
+
+        return instance;
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
+        List<String> list = new ArrayList<>();
+        if(!(sender instanceof Player)) {
+            return list;
+        }
+        Player p = (Player) sender;
+        switch (args.length){
+            case 1:
+                return getListContainer().getTpList(p, args[0]);
             case 2:
-                if(args[0].equalsIgnoreCase("create")) return list;
-                if(args[0].equalsIgnoreCase("delete") || args[0].equalsIgnoreCase("setpublic")) {
-                    list.addAll(manager.listWarpsForPlayer(p, !p.isOp()));
-                    return list;
-                }
+                if(args[0].equalsIgnoreCase("create")) return emptyList;
+                if(args[0].equalsIgnoreCase("delete") || args[0].equalsIgnoreCase("setpublic")) return getListContainer().getEditList(p, args[1]);
             case 3:
-                if(args[0].equalsIgnoreCase("setpublic")) {
-                    list.add("true");
-                    list.add("false");
-                }
-                return list;
+                return trueFalseList;
             default:
                 return list;
         }

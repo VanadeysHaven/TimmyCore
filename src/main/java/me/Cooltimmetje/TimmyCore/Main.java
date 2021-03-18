@@ -8,6 +8,7 @@ import me.Cooltimmetje.TimmyCore.Data.Profiles.User.ProfileManager;
 import me.Cooltimmetje.TimmyCore.Data.Profiles.User.Settings.Setting;
 import me.Cooltimmetje.TimmyCore.Listeners.*;
 import me.Cooltimmetje.TimmyCore.Packages.Discord.DiscordReady;
+import me.Cooltimmetje.TimmyCore.Packages.Holograms.HologramManager;
 import me.Cooltimmetje.TimmyCore.Packages.Npcs.NpcManager;
 import me.Cooltimmetje.TimmyCore.Packages.Rank.RankCommand;
 import me.Cooltimmetje.TimmyCore.Packages.Warp.WarpCommand;
@@ -71,6 +72,7 @@ public final class Main extends JavaPlugin {
         pm.unload();
         DiscordSRV.api.unsubscribe(discordReadyListener);
         NpcManager.getInstance().despawnAll();
+        HologramManager.getInstance().despawnAll();
     }
 
     public void registerEvent(Listener... listeners){

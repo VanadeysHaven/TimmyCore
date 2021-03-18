@@ -23,7 +23,7 @@ public final class NpcManager {
 
     public void spawnAll(){
         CitizensAPI.getNPCRegistry().deregisterAll();
-        for(CoreNpcDefinition definition : CoreNpcDefinition.values()) {
+        for(NpcDefinition definition : NpcDefinition.values()) {
             CoreNpc npc = new CoreNpc(definition);
             npc.spawn();
             npcs.add(npc);

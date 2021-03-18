@@ -8,6 +8,7 @@ import me.Cooltimmetje.TimmyCore.Data.Profiles.User.ProfileManager;
 import me.Cooltimmetje.TimmyCore.Data.Profiles.User.Settings.Setting;
 import me.Cooltimmetje.TimmyCore.Listeners.*;
 import me.Cooltimmetje.TimmyCore.Packages.Discord.DiscordReady;
+import me.Cooltimmetje.TimmyCore.Packages.Npcs.NpcManager;
 import me.Cooltimmetje.TimmyCore.Packages.Rank.RankCommand;
 import me.Cooltimmetje.TimmyCore.Packages.Warp.WarpCommand;
 import org.bukkit.Bukkit;
@@ -56,6 +57,9 @@ public final class Main extends JavaPlugin {
         for(Player p : Bukkit.getOnlinePlayers())
             pm.getUser(p); //We just need to load here, nothing else.
 
+        getLogger().info("Spawning NPC's...");
+        NpcManager.getInstance().spawnAll();
+
 //        getLogger().info("Registering crafting recipes...");
 //        new GoldSmelting(getServer(), this);
     }
@@ -66,6 +70,7 @@ public final class Main extends JavaPlugin {
         HikariManager.close();
         pm.unload();
         DiscordSRV.api.unsubscribe(discordReadyListener);
+        NpcManager.getInstance().despawnAll();
     }
 
     public void registerEvent(Listener... listeners){

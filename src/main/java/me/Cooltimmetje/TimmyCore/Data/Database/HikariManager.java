@@ -13,7 +13,7 @@ public final class HikariManager {
         hikari = new HikariDataSource();
         hikari.setMaximumPoolSize(10);
 
-        hikari.setJdbcUrl("jdbc:mysql://" + host + ":" + port + "/" + database + "?serverTimezone=UTC&useLegacyDatetimeCode=false");
+        hikari.setJdbcUrl("jdbc:mysql://" + host + ":" + port + "/" + database + "?serverTimezone=UTC&useLegacyDatetimeCode=false&useSSL=false");
         hikari.addDataSourceProperty("user", user);
         hikari.addDataSourceProperty("password", pass);
     }

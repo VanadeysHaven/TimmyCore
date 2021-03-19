@@ -1,6 +1,7 @@
 package me.Cooltimmetje.TimmyCore;
 
 import github.scarsz.discordsrv.DiscordSRV;
+import me.Cooltimmetje.TimmyCore.Commands.FireworkCommand;
 import me.Cooltimmetje.TimmyCore.Commands.NicknameCommand;
 import me.Cooltimmetje.TimmyCore.Commands.PronounsCommand;
 import me.Cooltimmetje.TimmyCore.Data.Database.HikariManager;
@@ -51,6 +52,7 @@ public final class Main extends JavaPlugin {
         getCommand("nick").setExecutor(new NicknameCommand());
         getCommand("rank").setExecutor(new RankCommand());
         getCommand("pronouns").setExecutor(new PronounsCommand());
+        getCommand("fw").setExecutor(new FireworkCommand());
 
         getLogger().info("Loading players...");
         for(Player p : Bukkit.getOnlinePlayers())

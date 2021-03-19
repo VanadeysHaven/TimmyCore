@@ -17,5 +17,8 @@ commands:
   pronouns:
     description: changing pronouns
     usage: /<command> <new pronouns>
+  fw:
+    description: shoot a random firework
+    usage: /fw
 depend:
   - DiscordSRV

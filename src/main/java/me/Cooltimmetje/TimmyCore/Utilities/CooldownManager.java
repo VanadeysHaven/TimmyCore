@@ -41,8 +41,12 @@ public final class CooldownManager {
     }
 
     public long getTimeRemaining(long identifier){
-        if(!lastUsed.containsKey(identifier+"")) throw new IllegalStateException("User is not on cooldown");
-        long timeSinceCooldownStarted = (System.currentTimeMillis() - lastUsed.get(identifier+""));
+        return getTimeRemaining(identifier+"");
+    }
+
+    public long getTimeRemaining(String identifier){
+        if(!lastUsed.containsKey(identifier)) throw new IllegalStateException("User is not on cooldown");
+        long timeSinceCooldownStarted = (System.currentTimeMillis() - lastUsed.get(identifier));
         long ret = (cooldown * 1000) - timeSinceCooldownStarted;
 
         if(ret < 0) throw new IllegalStateException("User is not on cooldown");

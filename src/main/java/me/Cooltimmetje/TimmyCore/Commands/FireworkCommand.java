@@ -2,6 +2,7 @@ package me.Cooltimmetje.TimmyCore.Commands;
 
 import me.Cooltimmetje.TimmyCore.Utilities.CooldownManager;
 import me.Cooltimmetje.TimmyCore.Utilities.MessageUtilities;
+import me.Cooltimmetje.TimmyCore.Utilities.MiscUtilities;
 import me.Cooltimmetje.TimmyCore.Utilities.RNGManager;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
@@ -43,14 +44,24 @@ public class FireworkCommand implements CommandExecutor {
             return true;
         }
 
-        Firework fw = (Firework) p.getWorld().spawnEntity(p.getLocation(), EntityType.FIREWORK);
-        fw.setFireworkMeta(fillMeta(fw.getFireworkMeta()));
+        int amount = 1;
+        if(args.length >= 1) if(MiscUtilities.isInt(args[0])) if(p.isOp()) {
+            amount = Integer.parseInt(args[0]);
+            if(amount < 1)
+                amount = 1;
+        }
+
+        Firework fw = null;
+        for(int i = 0; i < amount; i++) {
+            fw = (Firework) p.getWorld().spawnEntity(p.getLocation(), EntityType.FIREWORK);
+            fw.setFireworkMeta(fillMeta(fw.getFireworkMeta()));
+        }
+
         if(args.length >= 1)
             if(args[0].equalsIgnoreCase("ride")) {
                 p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 200, 10, true, false, true));
                 fw.addPassenger(p);
             }
-
 
         MessageUtilities.sendMessage(p, "Firework", "Woosh...");
         cm.startCooldown(p.getUniqueId().toString());
@@ -63,7 +74,7 @@ public class FireworkCommand implements CommandExecutor {
         for(int i = 0; i < amountOfEffects; i++)
             meta.addEffect(generateEffect());
 
-        meta.setPower(random.integer(1,3));
+        meta.setPower(random.integer(1,2));
         return meta;
     }
 

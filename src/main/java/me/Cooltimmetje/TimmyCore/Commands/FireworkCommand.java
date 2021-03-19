@@ -12,6 +12,8 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.FireworkMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 public class FireworkCommand implements CommandExecutor {
 
@@ -43,6 +45,12 @@ public class FireworkCommand implements CommandExecutor {
 
         Firework fw = (Firework) p.getWorld().spawnEntity(p.getLocation(), EntityType.FIREWORK);
         fw.setFireworkMeta(fillMeta(fw.getFireworkMeta()));
+        if(args.length >= 1)
+            if(args[0].equalsIgnoreCase("ride")) {
+                p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 200, 10, true, false, true));
+                fw.addPassenger(p);
+            }
+
 
         MessageUtilities.sendMessage(p, "Firework", "Woosh...");
         cm.startCooldown(p.getUniqueId().toString());

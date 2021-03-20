@@ -1,9 +1,11 @@
 package me.Cooltimmetje.TimmyCore.Data.Profiles.User;
 
 import lombok.Getter;
+import lombok.Setter;
 import me.Cooltimmetje.TimmyCore.Data.Profiles.User.Settings.Setting;
 import me.Cooltimmetje.TimmyCore.Data.Profiles.User.Settings.SettingsContainer;
 import me.Cooltimmetje.TimmyCore.Data.Profiles.User.Settings.SettingsSapling;
+import me.Cooltimmetje.TimmyCore.Managers.Interact.PendingInteract;
 import me.Cooltimmetje.TimmyCore.Packages.Rank.Rank;
 import me.Cooltimmetje.TimmyCore.Utilities.StringUtilities;
 import org.bukkit.Bukkit;
@@ -23,6 +25,8 @@ public final class CorePlayer {
     private Player player;
     private SettingsContainer settings;
     private Team team;
+
+    @Setter private PendingInteract pendingInteract;
 
     public CorePlayer(Player player){
         this.player = player;

@@ -23,5 +23,8 @@ commands:
   back:
     description: teleport back to your last location
     usage: /back
+  colorit:
+    description: color things!
+    usage: /colorit
 depend:
   - DiscordSRV

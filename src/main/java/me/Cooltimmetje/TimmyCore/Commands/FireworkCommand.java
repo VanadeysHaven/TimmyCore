@@ -16,7 +16,7 @@ import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class FireworkCommand implements CommandExecutor {
+public final class FireworkCommand implements CommandExecutor {
 
     private static final int COOLDOWN = 5;
 

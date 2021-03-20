@@ -2,7 +2,7 @@ package me.Cooltimmetje.TimmyCore.Utilities;
 
 import java.util.Random;
 
-public class RNGManager {
+public final class RNGManager {
 
     private Random random;
 

@@ -20,5 +20,8 @@ commands:
   fw:
     description: shoot a random firework
     usage: /fw
+  back:
+    description: teleport back to your last location
+    usage: /back
 depend:
   - DiscordSRV

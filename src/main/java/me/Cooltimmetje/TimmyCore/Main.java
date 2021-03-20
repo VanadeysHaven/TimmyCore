@@ -1,6 +1,7 @@
 package me.Cooltimmetje.TimmyCore;
 
 import github.scarsz.discordsrv.DiscordSRV;
+import me.Cooltimmetje.TimmyCore.Commands.BackCommand;
 import me.Cooltimmetje.TimmyCore.Commands.FireworkCommand;
 import me.Cooltimmetje.TimmyCore.Commands.NicknameCommand;
 import me.Cooltimmetje.TimmyCore.Commands.PronounsCommand;
@@ -44,7 +45,7 @@ public final class Main extends JavaPlugin {
         Setting.saveToDatabase();
 
         getLogger().info("Registering listeners...");
-        registerEvent(new DeathListener(), new JoinQuitListener(), new ChatListener(), new ServerPingListener(), new EntityExplodeListener());
+        registerEvent(new DeathListener(), new JoinQuitListener(), new ChatListener(), new ServerPingListener(), new EntityExplodeListener(), new BackCommand());
         DiscordSRV.api.subscribe(discordReadyListener);
 
         getLogger().info("Registering commands");
@@ -53,6 +54,7 @@ public final class Main extends JavaPlugin {
         getCommand("rank").setExecutor(new RankCommand());
         getCommand("pronouns").setExecutor(new PronounsCommand());
         getCommand("fw").setExecutor(new FireworkCommand());
+        getCommand("back").setExecutor(new BackCommand());
 
         getLogger().info("Loading players...");
         for(Player p : Bukkit.getOnlinePlayers())

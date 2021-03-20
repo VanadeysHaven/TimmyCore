@@ -1,13 +1,13 @@
 package me.Cooltimmetje.TimmyCore;
 
 import github.scarsz.discordsrv.DiscordSRV;
-import me.Cooltimmetje.TimmyCore.Commands.NicknameCommand;
-import me.Cooltimmetje.TimmyCore.Commands.PronounsCommand;
+import me.Cooltimmetje.TimmyCore.Commands.*;
 import me.Cooltimmetje.TimmyCore.Data.Database.HikariManager;
 import me.Cooltimmetje.TimmyCore.Data.Profiles.User.ProfileManager;
 import me.Cooltimmetje.TimmyCore.Data.Profiles.User.Settings.Setting;
 import me.Cooltimmetje.TimmyCore.Data.Profiles.User.Stats.Stat;
 import me.Cooltimmetje.TimmyCore.Listeners.*;
+import me.Cooltimmetje.TimmyCore.Managers.Interact.InteractListener;
 import me.Cooltimmetje.TimmyCore.Packages.Discord.DiscordReady;
 import me.Cooltimmetje.TimmyCore.Packages.Holograms.HologramManager;
 import me.Cooltimmetje.TimmyCore.Packages.Npcs.NpcManager;
@@ -47,7 +47,7 @@ public final class Main extends JavaPlugin {
         Stat.saveToDatabase();
 
         getLogger().info("Registering listeners...");
-        registerEvent(new DeathListener(), new JoinQuitListener(), new ChatListener(), new ServerPingListener(), new EntityExplodeListener());
+        registerEvent(new DeathListener(), new JoinQuitListener(), new ChatListener(), new ServerPingListener(), new EntityExplodeListener(), new BackCommand(), new InteractListener());
         DiscordSRV.api.subscribe(discordReadyListener);
 
         getLogger().info("Registering commands");
@@ -55,6 +55,9 @@ public final class Main extends JavaPlugin {
         getCommand("nick").setExecutor(new NicknameCommand());
         getCommand("rank").setExecutor(new RankCommand());
         getCommand("pronouns").setExecutor(new PronounsCommand());
+        getCommand("fw").setExecutor(new FireworkCommand());
+        getCommand("back").setExecutor(new BackCommand());
+        getCommand("colorit").setExecutor(new ColorCommand());
 
         getLogger().info("Loading players...");
         for(Player p : Bukkit.getOnlinePlayers())

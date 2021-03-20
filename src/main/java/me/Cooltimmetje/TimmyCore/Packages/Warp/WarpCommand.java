@@ -7,6 +7,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerTeleportEvent;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -61,7 +62,7 @@ public final class WarpCommand implements TabExecutor {
         if(!warp.isPublic() && !warp.isOwner(p) && !p.isOp())
             throw new WarpNotPublicException(warp.getName());
 
-        p.teleport(warp.getLocation());
+        p.teleport(warp.getLocation(), PlayerTeleportEvent.TeleportCause.COMMAND);
         MessageUtilities.sendMessage(p, "Warp", "&aYou have been teleported to warp &b" + warp.getName() + "&a!");
         return true;
     }

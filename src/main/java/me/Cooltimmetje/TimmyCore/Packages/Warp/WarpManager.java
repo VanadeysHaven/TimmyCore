@@ -14,7 +14,7 @@ import java.util.List;
 
 public final class WarpManager {
 
-    private static final int MAX_WARPS = 3;
+    private static final int MAX_WARPS = 5;
     private static final int MAX_LENGTH = 16;
 
     private ArrayList<Warp> warps;

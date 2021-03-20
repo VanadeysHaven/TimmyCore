@@ -17,6 +17,15 @@ commands:
   pronouns:
     description: changing pronouns
     usage: /<command> <new pronouns>
+  fw:
+    description: shoot a random firework
+    usage: /fw
+  back:
+    description: teleport back to your last location
+    usage: /back
+  colorit:
+    description: color things!
+    usage: /colorit
 depend:
   - DiscordSRV
   - Citizens

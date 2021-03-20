@@ -3,6 +3,7 @@ package me.Cooltimmetje.TimmyCore;
 import github.scarsz.discordsrv.DiscordSRV;
 import me.Cooltimmetje.TimmyCore.Commands.*;
 import me.Cooltimmetje.TimmyCore.Data.Database.HikariManager;
+import me.Cooltimmetje.TimmyCore.Data.Profiles.User.Currencies.Currency;
 import me.Cooltimmetje.TimmyCore.Data.Profiles.User.ProfileManager;
 import me.Cooltimmetje.TimmyCore.Data.Profiles.User.Settings.Setting;
 import me.Cooltimmetje.TimmyCore.Data.Profiles.User.Stats.Stat;
@@ -45,6 +46,7 @@ public final class Main extends JavaPlugin {
         getLogger().info("Updating database...");
         Setting.saveToDatabase();
         Stat.saveToDatabase();
+        Currency.saveToDatabase();
 
         getLogger().info("Registering listeners...");
         registerEvent(new DeathListener(), new JoinQuitListener(), new ChatListener(), new ServerPingListener(), new EntityExplodeListener(), new BackCommand(), new InteractListener());

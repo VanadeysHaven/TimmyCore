@@ -2,6 +2,8 @@ package me.Cooltimmetje.TimmyCore.Data.Profiles.User;
 
 import lombok.Getter;
 import lombok.Setter;
+import me.Cooltimmetje.TimmyCore.Data.Profiles.User.Currencies.CurrenciesContainer;
+import me.Cooltimmetje.TimmyCore.Data.Profiles.User.Currencies.CurrenciesSapling;
 import me.Cooltimmetje.TimmyCore.Data.Profiles.User.Settings.Setting;
 import me.Cooltimmetje.TimmyCore.Data.Profiles.User.Settings.SettingsContainer;
 import me.Cooltimmetje.TimmyCore.Data.Profiles.User.Settings.SettingsSapling;
@@ -27,6 +29,7 @@ public final class CorePlayer {
     private Player player;
     private SettingsContainer settings;
     private StatsContainer stats;
+    private CurrenciesContainer currencies;
     private Team team;
 
     @Setter private PendingInteract pendingInteract;
@@ -35,6 +38,7 @@ public final class CorePlayer {
         this.player = player;
         this.settings = new SettingsSapling(getUuid()).grow();
         this.stats = new StatsSapling(getUuid()).grow();
+        this.currencies = new CurrenciesSapling(getUuid()).grow();
 
         updateAppearance();
     }

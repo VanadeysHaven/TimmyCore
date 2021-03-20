@@ -18,4 +18,8 @@ public final class RNGManager {
         return random.nextInt((max - min) + 1) + min;
     }
 
+    public double double_(double min, double max){
+        return min + (max - min) * random.nextDouble();
+    }
+
 }

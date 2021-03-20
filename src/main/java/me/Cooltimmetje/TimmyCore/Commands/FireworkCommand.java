@@ -15,6 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.util.Vector;
 
 public final class FireworkCommand implements CommandExecutor {
 
@@ -45,16 +46,19 @@ public final class FireworkCommand implements CommandExecutor {
         }
 
         int amount = 1;
-        if(args.length >= 1) if(MiscUtilities.isInt(args[0])) if(p.isOp()) {
+        if(args.length >= 1) if(MiscUtilities.isInt(args[0])) {
             amount = Integer.parseInt(args[0]);
             if(amount < 1)
                 amount = 1;
+            if(!p.isOp())
+                amount = Math.min(10, amount);
         }
 
         Firework fw = null;
         for(int i = 0; i < amount; i++) {
             fw = (Firework) p.getWorld().spawnEntity(p.getLocation(), EntityType.FIREWORK);
             fw.setFireworkMeta(fillMeta(fw.getFireworkMeta()));
+            fw.setVelocity(fw.getVelocity().add(new Vector(random.double_(-0.01, 0.01), 0, random.double_(-0.01, 0.01))));
         }
 
         if(args.length >= 1)
@@ -67,7 +71,6 @@ public final class FireworkCommand implements CommandExecutor {
         cm.startCooldown(p.getUniqueId().toString());
         return true;
     }
-
 
     public FireworkMeta fillMeta(FireworkMeta meta){
         int amountOfEffects = random.integer(1, 3);

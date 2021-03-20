@@ -3,3 +3,4 @@
 .idea
 TimmyCore.iml
 dependency-reduced-pom.xml
+data_inserts.sql

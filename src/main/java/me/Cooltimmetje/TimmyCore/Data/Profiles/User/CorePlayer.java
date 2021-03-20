@@ -4,6 +4,8 @@ import lombok.Getter;
 import me.Cooltimmetje.TimmyCore.Data.Profiles.User.Settings.Setting;
 import me.Cooltimmetje.TimmyCore.Data.Profiles.User.Settings.SettingsContainer;
 import me.Cooltimmetje.TimmyCore.Data.Profiles.User.Settings.SettingsSapling;
+import me.Cooltimmetje.TimmyCore.Data.Profiles.User.Stats.StatsContainer;
+import me.Cooltimmetje.TimmyCore.Data.Profiles.User.Stats.StatsSapling;
 import me.Cooltimmetje.TimmyCore.Packages.Rank.Rank;
 import me.Cooltimmetje.TimmyCore.Utilities.StringUtilities;
 import org.bukkit.Bukkit;
@@ -22,11 +24,13 @@ public final class CorePlayer {
 
     private Player player;
     private SettingsContainer settings;
+    private StatsContainer stats;
     private Team team;
 
     public CorePlayer(Player player){
         this.player = player;
         this.settings = new SettingsSapling(getUuid()).grow();
+        this.stats = new StatsSapling(getUuid()).grow();
 
         updateAppearance();
     }

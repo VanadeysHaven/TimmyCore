@@ -1,4 +1,3 @@
-set global log_bin_trust_function_creators = 1;
 drop database if exists s36706_timmy_core;
 create database s36706_timmy_core;
 use s36706_timmy_core;
@@ -19,6 +18,34 @@ create table user_has_settings (
     value varchar(40),
     primary key (setting_id, uuid),
     foreign key (setting_id) references user_settings(id),
+    foreign key (uuid) references users(uuid)
+);
+
+create table currencies (
+    id int primary key auto_increment,
+    name varchar(40)
+);
+
+create table user_has_currencies (
+    currency_id int,
+    uuid varchar(40),
+    value varchar(40),
+    primary key (currency_id, uuid),
+    foreign key (currency_id) references currencies(id),
+    foreign key (uuid) references users(uuid)
+);
+
+create table stats (
+    id int primary key auto_increment,
+    name varchar(40)
+);
+
+create table user_has_stats (
+    stat_id int,
+    uuid varchar(40),
+    value varchar(40),
+    primary key (stat_id, uuid),
+    foreign key (stat_id) references stats(id),
     foreign key (uuid) references users(uuid)
 );
 

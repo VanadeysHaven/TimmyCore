@@ -6,6 +6,7 @@ import me.Cooltimmetje.TimmyCore.Commands.PronounsCommand;
 import me.Cooltimmetje.TimmyCore.Data.Database.HikariManager;
 import me.Cooltimmetje.TimmyCore.Data.Profiles.User.ProfileManager;
 import me.Cooltimmetje.TimmyCore.Data.Profiles.User.Settings.Setting;
+import me.Cooltimmetje.TimmyCore.Data.Profiles.User.Stats.Stat;
 import me.Cooltimmetje.TimmyCore.Listeners.*;
 import me.Cooltimmetje.TimmyCore.Packages.Discord.DiscordReady;
 import me.Cooltimmetje.TimmyCore.Packages.Holograms.HologramManager;
@@ -43,6 +44,7 @@ public final class Main extends JavaPlugin {
 
         getLogger().info("Updating database...");
         Setting.saveToDatabase();
+        Stat.saveToDatabase();
 
         getLogger().info("Registering listeners...");
         registerEvent(new DeathListener(), new JoinQuitListener(), new ChatListener(), new ServerPingListener(), new EntityExplodeListener());

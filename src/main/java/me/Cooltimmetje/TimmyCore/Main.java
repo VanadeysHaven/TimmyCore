@@ -50,7 +50,8 @@ public final class Main extends JavaPlugin {
         Currency.saveToDatabase();
 
         getLogger().info("Registering listeners...");
-        registerEvent(new DeathListener(), new JoinQuitListener(), new ChatListener(), new ServerPingListener(), new EntityExplodeListener(), new BackCommand(), new InteractListener());
+        registerEvent(new DeathListener(), new JoinQuitListener(), new ChatListener(), new ServerPingListener(), new EntityExplodeListener(), new BackCommand(), new InteractListener(),
+                new ButtonListener());
         DiscordSRV.api.subscribe(discordReadyListener);
 
         getLogger().info("Registering commands");
@@ -79,11 +80,11 @@ public final class Main extends JavaPlugin {
     @Override
     public void onDisable() {
         getLogger().info("Shutting down...");
-        HikariManager.close();
         pm.unload();
         DiscordSRV.api.unsubscribe(discordReadyListener);
         NpcManager.getInstance().despawnAll();
         HologramManager.getInstance().despawnAll();
+        HikariManager.close();
     }
 
     public void registerEvent(Listener... listeners){

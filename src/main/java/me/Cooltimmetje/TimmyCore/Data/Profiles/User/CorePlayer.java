@@ -132,7 +132,7 @@ public final class CorePlayer {
         for(CurrencyTimerDefinition definition : CurrencyTimerDefinition.values()){
             Stat currencyTimer = definition.getCurrencyTimer();
             int curTime = stats.getInt(currencyTimer);
-            if(curTime == 0) {
+            if(curTime == 1) {
                 MessageUtilities.sendMessage(player, getCurrencies().incrementInt(definition.getCurrency(), definition.getIncrease(), currencyTimer.getDefaultValue() + " minutes online"));
                 player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 0.5F, 1);
                 stats.setString(currencyTimer, currencyTimer.getDefaultValue());

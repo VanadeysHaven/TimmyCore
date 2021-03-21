@@ -6,6 +6,7 @@ import me.Cooltimmetje.TimmyCore.Data.Database.QueryExecutor;
 import me.Cooltimmetje.TimmyCore.Data.Database.QueryResult;
 import me.Cooltimmetje.TimmyCore.Data.Profiles.DataContainers.Data;
 import me.Cooltimmetje.TimmyCore.Data.Profiles.DataContainers.ValueType;
+import me.Cooltimmetje.TimmyCore.Utilities.StringUtilities;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -13,14 +14,18 @@ import java.util.ArrayList;
 @Getter
 public enum Currency implements Data {
 
-    NEUROS("neuros", ValueType.INTEGER, "0");
+    NEUROS("neuros", "Neuros", "6", ValueType.INTEGER, "0");
 
     private String dbReference;
+    private String name;
+    private String color;
     private ValueType type;
     private String defaultValue;
 
-    Currency(String dbReference, ValueType type, String defaultValue){
+    Currency(String dbReference, String name, String color, ValueType type, String defaultValue){
         this.dbReference = dbReference;
+        this.name = name;
+        this.color = color;
         this.type = type;
         this.defaultValue = defaultValue;
     }
@@ -58,6 +63,10 @@ public enum Currency implements Data {
                 if(qe != null) qe.close();
             }
         }
+    }
+
+    public String getColorCode(){
+        return StringUtilities.colorify("&" + color);
     }
 
     @Override
@@ -107,6 +116,6 @@ public enum Currency implements Data {
 
     @Override
     public Query getUpdateQuery() {
-        return Query.INSERT_CURRENCY_KEY;
+        return Query.UPDATE_CURRENCY_VALUE;
     }
 }

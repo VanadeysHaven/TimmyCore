@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public final class ProfileManager {
 
@@ -37,6 +38,10 @@ public final class ProfileManager {
         }
 
         return cp;
+    }
+
+    public Iterator<CorePlayer> getAll(){
+        return players.iterator();
     }
 
     private CorePlayer getPlayer(String uuid){

@@ -52,12 +52,20 @@ public class DataContainer<T extends Data> {
     }
 
     public void incrementInt(T field){
-        incrementInt(field, 1);
+        incrementInt(field, 1, true);
     }
 
-    public void incrementInt(T field, int incrementBy){
+    public void incrementInt(T field, boolean save){
+        incrementInt(field, 1, save);
+    }
+
+    public void incrementInt(T field, int incrementBy) {
+        incrementInt(field, incrementBy, true);
+    }
+
+    public void incrementInt(T field, int incrementBy, boolean save){
         if(field.getType() != ValueType.INTEGER) throw new IllegalArgumentException(field.getTerminology() + " " + field.getTechnicalName() + " is not of type INTEGER.");
-        setInt(field, getInt(field) + incrementBy);
+        setInt(field, getInt(field) + incrementBy, save, false);
     }
 
     public int getInt(T field){

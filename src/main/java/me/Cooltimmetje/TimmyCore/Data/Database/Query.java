@@ -23,7 +23,7 @@ public enum Query {
     DELETE_CURRENCY_VALUE("delete uhc from user_has_currencies uhc join currencies us on uhs.currency_id = us.id where uhs.uuid=? and us.name=?;"),
 
     //STATS
-    SELECT_ALL_STATS_VALUES("select s.name, uhs.value from user_has_stats uhs join stats s on uhs.setting_id = s.id where uuid=?;"),
+    SELECT_ALL_STATS_VALUES("select s.name, uhs.value from user_has_stats uhs join stats s on uhs.stat_id = s.id where uuid=?;"),
     SELECT_ALL_STAT_KEYS("select name from stats;"),
     INSERT_STAT_KEY("insert ignore into stats(name) value (?);"),
     UPDATE_STAT_VALUE("insert into user_has_stats (stat_id, uuid, value) values ((select id from stats where name=?),?,?) on duplicate key update value=?;"),

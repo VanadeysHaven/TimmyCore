@@ -12,6 +12,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.sql.SQLException;
+import java.util.Iterator;
 
 public final class JoinQuitListener implements Listener {
 
@@ -22,6 +23,10 @@ public final class JoinQuitListener implements Listener {
         registerPlayer(event.getPlayer().getUniqueId().toString(), event.getPlayer().getName());
         CorePlayer cp = pm.getUser(event.getPlayer());
         event.setJoinMessage(StringUtilities.colorify(StringUtilities.formatMessageWithTag("Join", formatName(cp) + " &ajoined the game.")));
+
+        Iterator<CorePlayer> players = pm.getAll();
+        while(players.hasNext())
+            players.next().setTopPlayerList();
     }
 
     @EventHandler
@@ -29,6 +34,10 @@ public final class JoinQuitListener implements Listener {
         CorePlayer cp = pm.getUser(event.getPlayer());
         event.setQuitMessage(StringUtilities.colorify(StringUtilities.formatMessageWithTag("Quit", formatName(cp) + " &aleft the game.")));
         pm.unload(event.getPlayer().getUniqueId().toString());
+
+        Iterator<CorePlayer> players = pm.getAll();
+        while(players.hasNext())
+            players.next().setTopPlayerList();
     }
 
     public String formatName(CorePlayer cp){

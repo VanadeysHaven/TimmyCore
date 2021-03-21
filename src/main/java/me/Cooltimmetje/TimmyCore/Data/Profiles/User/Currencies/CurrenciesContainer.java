@@ -3,9 +3,20 @@ package me.Cooltimmetje.TimmyCore.Data.Profiles.User.Currencies;
 import me.Cooltimmetje.TimmyCore.Data.Profiles.DataContainers.DataContainer;
 
 public final class CurrenciesContainer extends DataContainer<Currency> {
+
     public CurrenciesContainer(String uuid, CurrenciesSapling sapling) {
         super(uuid);
         processCurrenciesSapling(sapling);
+    }
+
+    public String incrementInt(Currency currency, String reason){
+        return incrementInt(currency, 1, reason);
+    }
+
+    public String incrementInt(Currency currency, int incrementBy, String reason){
+        super.incrementInt(currency, incrementBy);
+
+        return currency.getColorCode() + "+" + incrementBy + " " + currency.getName() + " (" + reason + ")";
     }
 
     private void processCurrenciesSapling(CurrenciesSapling sapling){

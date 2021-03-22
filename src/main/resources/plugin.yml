@@ -26,6 +26,9 @@ commands:
   colorit:
     description: color things!
     usage: /colorit
+  pay:
+    description: pay other users
+    usage: /pay <name> <amount>
 depend:
   - DiscordSRV
   - Citizens

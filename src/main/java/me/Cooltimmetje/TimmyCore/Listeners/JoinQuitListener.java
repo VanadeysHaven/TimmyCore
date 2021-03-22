@@ -5,6 +5,8 @@ import me.Cooltimmetje.TimmyCore.Data.Database.QueryExecutor;
 import me.Cooltimmetje.TimmyCore.Data.Profiles.User.CorePlayer;
 import me.Cooltimmetje.TimmyCore.Data.Profiles.User.ProfileManager;
 import me.Cooltimmetje.TimmyCore.Data.Profiles.User.Settings.Setting;
+import me.Cooltimmetje.TimmyCore.Main;
+import me.Cooltimmetje.TimmyCore.Utilities.NameUtilities;
 import me.Cooltimmetje.TimmyCore.Utilities.StringUtilities;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -17,6 +19,7 @@ import java.util.Iterator;
 public final class JoinQuitListener implements Listener {
 
     private static final ProfileManager pm = ProfileManager.getInstance();
+    private static final NameUtilities nu = NameUtilities.getInstance();
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
@@ -26,7 +29,9 @@ public final class JoinQuitListener implements Listener {
 
         Iterator<CorePlayer> players = pm.getAll();
         while(players.hasNext())
-            players.next().setTopPlayerList();
+            players.next().setPlayerListHeader();
+
+        nu.updateNames();
     }
 
     @EventHandler
@@ -35,9 +40,14 @@ public final class JoinQuitListener implements Listener {
         event.setQuitMessage(StringUtilities.colorify(StringUtilities.formatMessageWithTag("Quit", formatName(cp) + " &aleft the game.")));
         pm.unload(event.getPlayer().getUniqueId().toString());
 
-        Iterator<CorePlayer> players = pm.getAll();
-        while(players.hasNext())
-            players.next().setTopPlayerList();
+        Main.getPlugin().getServer().getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () -> {
+            Iterator<CorePlayer> players = pm.getAll();
+            while(players.hasNext())
+                players.next().setPlayerListHeader();
+
+            nu.updateNames();
+        }, 20L);
+
     }
 
     public String formatName(CorePlayer cp){

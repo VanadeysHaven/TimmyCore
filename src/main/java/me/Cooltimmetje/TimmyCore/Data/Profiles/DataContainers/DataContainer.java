@@ -16,6 +16,8 @@ public class DataContainer<T extends Data> {
     private HashMap<T, String> values;
     private HashMap<T, CooldownManager> cooldowns;
 
+    private static final boolean DEFAULT_SAVE = false;
+
     public DataContainer(String uuid){
         this.uuid = uuid;
         values = new HashMap<>();
@@ -23,7 +25,7 @@ public class DataContainer<T extends Data> {
     }
 
     public void setString(T field, String value){
-        setString(field, value, true, false);
+        setString(field, value, DEFAULT_SAVE, false);
     }
 
     public void setString(T field, String value, boolean save, boolean bypassCooldown){
@@ -44,7 +46,7 @@ public class DataContainer<T extends Data> {
     }
 
     public void setInt(T field, int value){
-        setInt(field, value, true, false);
+        setInt(field, value, DEFAULT_SAVE, false);
     }
 
     public void setInt(T field, int value, boolean save, boolean bypassCooldown){
@@ -52,7 +54,7 @@ public class DataContainer<T extends Data> {
     }
 
     public void incrementInt(T field){
-        incrementInt(field, 1, true);
+        incrementInt(field, 1, DEFAULT_SAVE);
     }
 
     public void incrementInt(T field, boolean save){
@@ -60,7 +62,7 @@ public class DataContainer<T extends Data> {
     }
 
     public void incrementInt(T field, int incrementBy) {
-        incrementInt(field, incrementBy, true);
+        incrementInt(field, incrementBy, DEFAULT_SAVE);
     }
 
     public void incrementInt(T field, int incrementBy, boolean save){
@@ -74,7 +76,7 @@ public class DataContainer<T extends Data> {
     }
 
     public void setDouble(T field, double value){
-        setDouble(field,  value, true, false);
+        setDouble(field,  value, DEFAULT_SAVE, false);
     }
 
     public void setDouble(T field, double value, boolean save, boolean bypassCooldown){
@@ -87,7 +89,7 @@ public class DataContainer<T extends Data> {
     }
 
     public void setLong(T field, long value){
-        setLong(field, value, true, false);
+        setLong(field, value, DEFAULT_SAVE, false);
     }
 
     public void setLong(T field, long value, boolean save, boolean bypassCooldown){
@@ -109,7 +111,7 @@ public class DataContainer<T extends Data> {
     }
 
     public void setBoolean(T field, boolean value){
-        setBoolean(field, value, true, false);
+        setBoolean(field, value, DEFAULT_SAVE, false);
     }
 
     public void setBoolean(T field, boolean value, boolean save, boolean bypassCooldown){

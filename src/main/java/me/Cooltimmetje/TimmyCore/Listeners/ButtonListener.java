@@ -9,7 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.meta.FireworkMeta;
 
-public class ButtonListener implements Listener {
+public final class ButtonListener implements Listener {
 
     @EventHandler
     public void onButton(PlayerInteractEvent event){

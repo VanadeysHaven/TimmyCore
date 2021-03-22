@@ -4,6 +4,7 @@ import me.Cooltimmetje.TimmyCore.Data.Profiles.User.CorePlayer;
 import me.Cooltimmetje.TimmyCore.Data.Profiles.User.ProfileManager;
 import me.Cooltimmetje.TimmyCore.Data.Profiles.User.Settings.Setting;
 import me.Cooltimmetje.TimmyCore.Utilities.MessageUtilities;
+import me.Cooltimmetje.TimmyCore.Utilities.NameUtilities;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -12,6 +13,7 @@ import org.bukkit.entity.Player;
 public final class NicknameCommand implements CommandExecutor {
 
     private static final ProfileManager pm = ProfileManager.getInstance();
+    private static final NameUtilities nu = NameUtilities.getInstance();
     private static final int MAX_LENGTH = 16;
 
     @Override
@@ -41,6 +43,7 @@ public final class NicknameCommand implements CommandExecutor {
         }
 
         cp.updateAppearance();
+        nu.updateNames();
 
         return true;
     }

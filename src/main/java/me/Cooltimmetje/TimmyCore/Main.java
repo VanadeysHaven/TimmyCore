@@ -14,7 +14,8 @@ import me.Cooltimmetje.TimmyCore.Packages.Holograms.HologramManager;
 import me.Cooltimmetje.TimmyCore.Packages.Npcs.NpcManager;
 import me.Cooltimmetje.TimmyCore.Packages.Rank.RankCommand;
 import me.Cooltimmetje.TimmyCore.Packages.Warp.WarpCommand;
-import me.Cooltimmetje.TimmyCore.Timers.OneMinute;
+import me.Cooltimmetje.TimmyCore.Timers.OneMinuteTimer;
+import me.Cooltimmetje.TimmyCore.Timers.TenMinuteTimer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -62,6 +63,7 @@ public final class Main extends JavaPlugin {
         getCommand("fw").setExecutor(new FireworkCommand());
         getCommand("back").setExecutor(new BackCommand());
         getCommand("colorit").setExecutor(new ColorCommand());
+        getCommand("pay").setExecutor(new PayCommand());
 
         getLogger().info("Loading players...");
         for(Player p : Bukkit.getOnlinePlayers())
@@ -71,7 +73,8 @@ public final class Main extends JavaPlugin {
         NpcManager.getInstance().spawnAll();
 
         getLogger().info("Starting timers...");
-        getServer().getScheduler().scheduleSyncRepeatingTask(this, new OneMinute(), 0L, 1200L);
+        getServer().getScheduler().scheduleSyncRepeatingTask(this, new OneMinuteTimer(), 0L, 1200L);
+        getServer().getScheduler().scheduleSyncRepeatingTask(this, new TenMinuteTimer(), 12000L, 12000L);
 
 //        getLogger().info("Registering crafting recipes...");
 //        new GoldSmelting(getServer(), this);

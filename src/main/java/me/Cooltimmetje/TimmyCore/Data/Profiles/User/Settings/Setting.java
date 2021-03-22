@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public enum Setting implements Data {
 
     NICKNAME ("nickname", ValueType.STRING, ""            ),
+    ID_NICK  ("id_nick",  ValueType.STRING, ""            ),
     RANK     ("rank",     ValueType.STRING, "NEUROCITIZEN"),
     PRONOUNS ("pronouns", ValueType.STRING, ""            );
 

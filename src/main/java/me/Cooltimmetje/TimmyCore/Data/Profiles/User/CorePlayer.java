@@ -78,11 +78,11 @@ public final class CorePlayer {
         setDisplayName();
         setNamePlate(setNickname);
         setPlayerListName(pronouns);
-        setTopPlayerList();
-        setBottomPlayerList();
+        setPlayerListHeader();
+        setPlayerListFooter();
     }
 
-    public void setTopPlayerList(){
+    public void setPlayerListHeader(){
         String format = "&aWelcome to {0}&a, {1} {2}&a!\n&aPlayers online: &b{3}\n ";
         format = MessageFormat.format(format, Constants.LONG_SERVER_NAME, rankTag, nickname, Bukkit.getOnlinePlayers().size());
         format = StringUtilities.colorify(format);
@@ -90,7 +90,7 @@ public final class CorePlayer {
         player.setPlayerListHeader(format);
     }
 
-    private void setBottomPlayerList(){
+    public void setPlayerListFooter(){
         String format = " \n&8--- &a&lMY PROFILE &8---\n&6Neuros&8: &b{0}";
         format = MessageFormat.format(format, getCurrencies().getString(Currency.NEUROS));
         format = StringUtilities.colorify(format);
@@ -120,10 +120,14 @@ public final class CorePlayer {
     }
 
     public void unload() {
+        save();
+        team.unregister();
+    }
+
+    public void save(){
         currencies.save();
         stats.save();
         settings.save();
-        team.unregister();
     }
 
     public void runCurrencyTimers() {
@@ -141,6 +145,11 @@ public final class CorePlayer {
             }
         }
 
-        setBottomPlayerList();
+        setPlayerListFooter();
     }
+
+    public String getFullDisplayName(){
+        return rankTag + " " + nickname + "&r";
+    }
+
 }

@@ -2,12 +2,24 @@ package me.Cooltimmetje.TimmyCore.Data.Profiles.User.Settings;
 
 import me.Cooltimmetje.TimmyCore.Data.Profiles.DataContainers.DataContainer;
 import me.Cooltimmetje.TimmyCore.Packages.Rank.Rank;
+import me.Cooltimmetje.TimmyCore.Utilities.StringUtilities;
+import org.bukkit.ChatColor;
 
 public final class SettingsContainer extends DataContainer<Setting> {
 
     public SettingsContainer(String uuid, SettingsSapling sapling){
         super(uuid);
         processSettingsSapling(sapling);
+    }
+
+    @Override
+    public void setString(Setting field, String value, boolean save, boolean bypassCooldown) {
+        if(field == Setting.NICKNAME) {
+            String idNick = ChatColor.stripColor(StringUtilities.colorify(value));
+            super.setString(Setting.ID_NICK, idNick, save, bypassCooldown);
+        }
+
+        super.setString(field, value, save, bypassCooldown);
     }
 
     public Rank getRank(){
@@ -20,6 +32,7 @@ public final class SettingsContainer extends DataContainer<Setting> {
 
     private void processSettingsSapling(SettingsSapling sapling){
         for (Setting setting : Setting.values()) {
+            if(setting == Setting.ID_NICK) continue;
             String value = sapling.getSetting(setting);
             if (value != null) {
                 setString(setting, value, false, true);

@@ -13,19 +13,22 @@ import java.util.ArrayList;
 @Getter
 public enum Setting implements Data {
 
-    NICKNAME ("nickname", ValueType.STRING, ""            ),
-    ID_NICK  ("id_nick",  ValueType.STRING, ""            ),
-    RANK     ("rank",     ValueType.STRING, "NEUROCITIZEN"),
-    PRONOUNS ("pronouns", ValueType.STRING, ""            );
+    NICKNAME           ("nickname",           ValueType.STRING,  ""            , true ),
+    ID_NICK            ("id_nick",            ValueType.STRING,  ""            , false),
+    RANK               ("rank",               ValueType.STRING,  "NEUROCITIZEN", true ),
+    PRONOUNS           ("pronouns",           ValueType.STRING,  ""            , true ),
+    REQUIRE_TP_REQUEST ("require_tp_request", ValueType.BOOLEAN, "false"       , true );
 
     private String dbReference;
     private ValueType type;
     private String defaultValue;
+    private boolean saveToDatabase;
 
-    Setting(String dbReference, ValueType type, String defaultValue) {
+    Setting(String dbReference, ValueType type, String defaultValue, boolean saveToDatabase) {
         this.dbReference = dbReference;
         this.type = type;
         this.defaultValue = defaultValue;
+        this.saveToDatabase = saveToDatabase;
     }
 
     public static Setting getByDbReference(String reference){
@@ -112,4 +115,5 @@ public enum Setting implements Data {
     public Query getUpdateQuery() {
         return Query.UPDATE_SETTING_VALUE;
     }
+
 }

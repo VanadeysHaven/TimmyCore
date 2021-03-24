@@ -17,5 +17,6 @@ public interface Data {
     Query getDeleteQuery();
     Query getUpdateQuery();
     String getDbReference();
+    boolean isSaveToDatabase();
 
 }

@@ -167,6 +167,7 @@ public class DataContainer<T extends Data> {
     }
 
     public void save(T field){ //identifier id //id identifier value value
+        if(!field.isSaveToDatabase()) return;
         String value = getString(field);
         if(value == null) value = "null";
         QueryExecutor qe = null;

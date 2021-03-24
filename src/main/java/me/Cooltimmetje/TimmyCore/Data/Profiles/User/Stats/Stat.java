@@ -111,4 +111,10 @@ public enum Stat implements Data {
     public Query getUpdateQuery() {
         return Query.UPDATE_STAT_VALUE;
     }
+
+    @Override
+    public boolean isSaveToDatabase(){
+        return true;
+    }
+
 }

@@ -21,7 +21,7 @@ public final class QueryResult {
         this.rs = rs;
         this.verboseLogging = verboseLogging;
 
-        logger.info("QueryResult Created: \n" + generateTable());
+//        logger.info("QueryResult Created: \n" + generateTable());
     }
 
     public QueryResult(ResultSet rs) throws SQLException {

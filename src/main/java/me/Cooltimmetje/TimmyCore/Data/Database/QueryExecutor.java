@@ -25,7 +25,7 @@ public final class QueryExecutor {
     private Object lastValue;
 
     public QueryExecutor(Query query) throws SQLException {
-        logger.info("Making new query of type " + query);
+//        logger.info("Making new query of type " + query);
         c = HikariManager.getConnection();
         ps = c.prepareStatement(query.getQuery(), ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
         usedPositions = new ArrayList<>();
@@ -33,7 +33,7 @@ public final class QueryExecutor {
 
     public QueryExecutor setInt(int position, int value) throws SQLException {
         if(isPositionUsed(position)) throw new IllegalArgumentException("Position " + position + " is not free.");
-        logger.info("Setting INT at position " + position + " with value " + value);
+//        logger.info("Setting INT at position " + position + " with value " + value);
         usedPositions.add(position);
         ps.setInt(position, value);
         lastOperation = Operation.INT;
@@ -43,7 +43,7 @@ public final class QueryExecutor {
 
     public QueryExecutor setLong(int position, long value) throws SQLException {
         if(isPositionUsed(position)) throw new IllegalArgumentException("Position " + position + " is not free.");
-        logger.info("Setting LONG at position " + position + " with value " + value);
+//        logger.info("Setting LONG at position " + position + " with value " + value);
         usedPositions.add(position);
         ps.setLong(position, value);
         lastOperation = Operation.LONG;
@@ -53,7 +53,7 @@ public final class QueryExecutor {
 
     public QueryExecutor setDouble(int position, double value) throws SQLException {
         if(isPositionUsed(position)) throw new IllegalArgumentException("Position " + position + " is not free.");
-        logger.info("Setting DOUBLE at position " + position + " with value " + value);
+//        logger.info("Setting DOUBLE at position " + position + " with value " + value);
         usedPositions.add(position);
         ps.setDouble(position, value);
         lastOperation = Operation.LONG;
@@ -63,7 +63,7 @@ public final class QueryExecutor {
 
     public QueryExecutor setFloat(int position, float value) throws SQLException {
         if(isPositionUsed(position)) throw new IllegalArgumentException("Position " + position + " is not free.");
-        logger.info("Setting FLOAT at position " + position + " with value " + value);
+//        logger.info("Setting FLOAT at position " + position + " with value " + value);
         usedPositions.add(position);
         ps.setFloat(position, value);
         lastOperation = Operation.LONG;
@@ -73,7 +73,7 @@ public final class QueryExecutor {
 
     public QueryExecutor setBoolean(int position, boolean value) throws SQLException {
         if(isPositionUsed(position)) throw new IllegalArgumentException("Position " + position + " is not free.");
-        logger.info("Setting BOOLEAN at position " + position + " with value " + value);
+//        logger.info("Setting BOOLEAN at position " + position + " with value " + value);
         usedPositions.add(position);
         ps.setBoolean(position, value);
         lastOperation = Operation.BOOLEAN;
@@ -83,7 +83,7 @@ public final class QueryExecutor {
 
     public QueryExecutor setString(int position, String value) throws SQLException {
         if(isPositionUsed(position)) throw new IllegalArgumentException("Position " + position + " is not free.");
-        logger.info("Setting STRING at position " + position + " with value " + value);
+//        logger.info("Setting STRING at position " + position + " with value " + value);
         usedPositions.add(position);
         ps.setString(position, value);
         lastOperation = Operation.STRING;
@@ -93,7 +93,7 @@ public final class QueryExecutor {
 
     public QueryExecutor and(int position) throws SQLException {
         if(isPositionUsed(position)) throw new IllegalArgumentException("Position " + position + " is not free.");
-        logger.info("Repeating last " + lastOperation + " value at position " + position);
+//        logger.info("Repeating last " + lastOperation + " value at position " + position);
         if(lastOperation == Operation.INT) ps.setInt(position, (int) lastValue);
         if(lastOperation == Operation.LONG) ps.setLong(position, (long) lastValue);
         if(lastOperation == Operation.STRING) ps.setString(position, (String) lastValue);

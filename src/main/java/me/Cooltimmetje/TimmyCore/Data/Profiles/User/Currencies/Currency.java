@@ -118,4 +118,10 @@ public enum Currency implements Data {
     public Query getUpdateQuery() {
         return Query.UPDATE_CURRENCY_VALUE;
     }
+
+    @Override
+    public boolean isSaveToDatabase() {
+        return true;
+    }
+
 }

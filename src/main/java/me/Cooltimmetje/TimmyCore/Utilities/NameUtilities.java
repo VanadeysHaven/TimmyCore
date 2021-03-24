@@ -57,11 +57,12 @@ public final class NameUtilities {
     }
 
     public List<String> getAllNames(Player p, String cur){
+        final String curLower = cur.toLowerCase();
         if(names.isEmpty())
             updateNames();
 
         List<String> copy = new ArrayList<>(names);
-        copy.removeIf(s -> !s.startsWith(cur));
+        copy.removeIf(s -> !s.startsWith(curLower));
         copy.remove(p.getName());
         copy.remove(pm.getUser(p).getSettings().getString(Setting.ID_NICK));
 

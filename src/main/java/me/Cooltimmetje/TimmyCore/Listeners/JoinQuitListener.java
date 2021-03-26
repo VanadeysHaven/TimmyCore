@@ -1,5 +1,6 @@
 package me.Cooltimmetje.TimmyCore.Listeners;
 
+import me.Cooltimmetje.TimmyCore.Commands.TeleportCommand;
 import me.Cooltimmetje.TimmyCore.Data.Database.Query;
 import me.Cooltimmetje.TimmyCore.Data.Database.QueryExecutor;
 import me.Cooltimmetje.TimmyCore.Data.Profiles.User.CorePlayer;
@@ -46,8 +47,8 @@ public final class JoinQuitListener implements Listener {
                 players.next().setPlayerListHeader();
 
             nu.updateNames();
-        }, 20L);
-
+            TeleportCommand.getInstance().logout(event.getPlayer());
+            }, 20L);
     }
 
     public String formatName(CorePlayer cp){

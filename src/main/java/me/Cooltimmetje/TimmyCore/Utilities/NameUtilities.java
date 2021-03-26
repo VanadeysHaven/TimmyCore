@@ -47,6 +47,7 @@ public final class NameUtilities {
     }
 
     public void updateNames(){
+
         names.clear();
         Iterator<CorePlayer> players = pm.getAll();
         while(players.hasNext()) {
@@ -56,13 +57,18 @@ public final class NameUtilities {
         }
     }
 
+    public List<String> getAllNames(Player p){
+        return getAllNames(p, "");
+    }
+
     public List<String> getAllNames(Player p, String cur){
         final String curLower = cur.toLowerCase();
         if(names.isEmpty())
             updateNames();
 
         List<String> copy = new ArrayList<>(names);
-        copy.removeIf(s -> !s.startsWith(curLower));
+        if(!cur.equals(""))
+            copy.removeIf(s -> !s.startsWith(curLower));
         copy.remove(p.getName());
         copy.remove(pm.getUser(p).getSettings().getString(Setting.ID_NICK));
 

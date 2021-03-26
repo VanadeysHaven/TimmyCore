@@ -29,6 +29,9 @@ commands:
   pay:
     description: pay other users
     usage: /pay <name> <amount>
+  tp:
+    description: teleport to others
+    usage: /tp <name>
 depend:
   - DiscordSRV
   - Citizens

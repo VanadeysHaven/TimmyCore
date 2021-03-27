@@ -140,7 +140,7 @@ public final class TeleportCommand implements TabExecutor {
         cp.getPlayer().teleport(target.getPlayer().getLocation(), PlayerTeleportEvent.TeleportCause.COMMAND);
         MessageUtilities.sendMessage(cp, "Teleport", "You teleported to " + target.getFullDisplayName() + "&a.");
         if(!force) {
-            MessageUtilities.sendMessage(cp, "Teleport", cp.getFullDisplayName() + " &ahas teleported to you.");
+            MessageUtilities.sendMessage(target, "Teleport", cp.getFullDisplayName() + " &ahas teleported to you.");
         }
         return true;
     }

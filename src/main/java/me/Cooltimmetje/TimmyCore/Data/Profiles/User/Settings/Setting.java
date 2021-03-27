@@ -17,7 +17,7 @@ public enum Setting implements Data {
     ID_NICK            ("id_nick",            ValueType.STRING,  ""            , false),
     RANK               ("rank",               ValueType.STRING,  "NEUROCITIZEN", true ),
     PRONOUNS           ("pronouns",           ValueType.STRING,  ""            , true ),
-    REQUIRE_TP_REQUEST ("require_tp_request", ValueType.BOOLEAN, "false"       , true );
+    REQUIRE_TP_REQUEST ("require_tp_request", ValueType.BOOLEAN, "true"        , true );
 
     private String dbReference;
     private ValueType type;

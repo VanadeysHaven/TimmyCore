@@ -65,6 +65,9 @@ public final class Main extends JavaPlugin {
         getCommand("colorit").setExecutor(new ColorCommand());
         getCommand("pay").setExecutor(new PayCommand());
         getCommand("tp").setExecutor(TeleportCommand.getInstance());
+        getCommand("w").setExecutor(WhisperCommand.getInstance());
+//        getCommand("r").setExecutor(WhisperCommand.getInstance());
+
 
         getLogger().info("Loading players...");
         for(Player p : Bukkit.getOnlinePlayers())

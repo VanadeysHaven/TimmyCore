@@ -32,6 +32,10 @@ commands:
   tp:
     description: teleport to others
     usage: /tp <name>
+  w:
+    description: Send private messages
+    usage: /w <user> <message...>
+    aliases: r
 depend:
   - DiscordSRV
   - Citizens

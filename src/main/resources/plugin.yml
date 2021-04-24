@@ -1,6 +1,6 @@
 name: TimmyCore
 version: 0.1
-main: me.Cooltimmetje.TimmyCore.Main
+main: me.VanadeysHaven.TimmyCore.Main
 author: Cooltimmetje
 prefix: TimmyCore
 api-version: 1.16
@@ -36,6 +36,10 @@ commands:
     description: Send private messages
     usage: /w <user> <message...>
     aliases: r
+  note:
+    description: Make a note in chat!
+    usage: /note <note>
+    aliases: n
 depend:
   - DiscordSRV
   - Citizens

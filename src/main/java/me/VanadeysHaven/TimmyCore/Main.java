@@ -10,14 +10,11 @@ import me.VanadeysHaven.TimmyCore.Data.Profiles.User.Stats.Stat;
 import me.VanadeysHaven.TimmyCore.Listeners.*;
 import me.VanadeysHaven.TimmyCore.Managers.Interact.InteractListener;
 import me.VanadeysHaven.TimmyCore.Packages.Discord.DiscordReady;
-import me.VanadeysHaven.TimmyCore.Packages.Holograms.HologramManager;
-import me.VanadeysHaven.TimmyCore.Packages.Npcs.NpcManager;
 import me.VanadeysHaven.TimmyCore.Packages.Rank.RankCommand;
 import me.VanadeysHaven.TimmyCore.Packages.Warp.WarpCommand;
 import me.VanadeysHaven.TimmyCore.Timers.OneMinuteTimer;
 import me.VanadeysHaven.TimmyCore.Timers.TenMinuteTimer;
 import org.bukkit.Bukkit;
-import org.bukkit.Note;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
@@ -75,9 +72,6 @@ public final class Main extends JavaPlugin {
         for(Player p : Bukkit.getOnlinePlayers())
             pm.getUser(p); //We just need to load here, nothing else.
 
-        getLogger().info("Spawning NPC's...");
-        NpcManager.getInstance().spawnAll();
-
         getLogger().info("Starting timers...");
         getServer().getScheduler().scheduleSyncRepeatingTask(this, new OneMinuteTimer(), 0L, 1200L);
         getServer().getScheduler().scheduleSyncRepeatingTask(this, new TenMinuteTimer(), 12000L, 12000L);
@@ -91,8 +85,6 @@ public final class Main extends JavaPlugin {
         getLogger().info("Shutting down...");
         pm.unload();
         DiscordSRV.api.unsubscribe(discordReadyListener);
-        NpcManager.getInstance().despawnAll();
-        HologramManager.getInstance().despawnAll();
         HikariManager.close();
     }
 

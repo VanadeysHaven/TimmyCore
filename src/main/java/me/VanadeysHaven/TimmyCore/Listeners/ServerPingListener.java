@@ -1,13 +1,11 @@
 package me.VanadeysHaven.TimmyCore.Listeners;
 
-import lombok.Getter;
 import me.VanadeysHaven.TimmyCore.Main;
 import me.VanadeysHaven.TimmyCore.Utilities.StringUtilities;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.ServerListPingEvent;
-import org.bukkit.material.PressurePlate;
 
 import java.util.List;
 import java.util.Random;

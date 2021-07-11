@@ -1,5 +1,7 @@
 package me.VanadeysHaven.TimmyCore.Utilities.Reload;
 
+import me.VanadeysHaven.TimmyCore.Main;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +32,7 @@ public final class ReloadManager {
     }
 
     public void reloadAll(){
+        Main.getPlugin().reloadConfig();
         reloadables.forEach(Reloadable::reload);
     }
 

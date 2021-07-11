@@ -37,8 +37,8 @@ public final class ServerPingListener implements Listener, Reloadable {
 
     @EventHandler
     public void onPing(ServerListPingEvent event){
-        String format = motdFormat.replace("$name", name).replace("$shortName", shortName).replace("$version", Main.getPlugin().getServer().getVersion());
-        format = format.replace("$motd", motds.get(random.nextInt(motds.size() - 1)));
+        String format = motdFormat.replace("$name", name).replace("$shortName", shortName);
+        format = format.replace("$motd", motds.get(random.nextInt(motds.size())));
         event.setMotd(StringUtilities.colorify(format));
     }
 

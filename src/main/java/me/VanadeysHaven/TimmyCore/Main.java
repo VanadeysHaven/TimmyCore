@@ -67,6 +67,7 @@ public final class Main extends JavaPlugin {
         getCommand("tp").setExecutor(TeleportCommand.getInstance());
         getCommand("w").setExecutor(WhisperCommand.getInstance());
         getCommand("note").setExecutor(new NoteCommand());
+        getCommand("tcreload").setExecutor(new ReloadCommand());
 //        getCommand("r").setExecutor(WhisperCommand.getInstance());
 
 

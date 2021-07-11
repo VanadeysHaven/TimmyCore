@@ -7,7 +7,7 @@ import me.VanadeysHaven.TimmyCore.Data.Profiles.User.Stats.Stat;
 @Getter
 public enum CurrencyTimerDefinition {
 
-    NEUROS(Currency.NEUROS, Stat.NEURO_TIMER, 20);
+    COINS (Currency.COINS, Stat.COINS_TIMER, 20);
 
     private Currency currency;
     private Stat currencyTimer;

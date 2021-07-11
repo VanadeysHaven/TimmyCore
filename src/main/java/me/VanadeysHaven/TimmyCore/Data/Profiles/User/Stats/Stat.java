@@ -13,7 +13,7 @@ import java.util.ArrayList;
 @Getter
 public enum Stat implements Data {
 
-    NEURO_TIMER("neuro_timer", ValueType.INTEGER, "10", false);
+    COINS_TIMER("coins_timer", ValueType.INTEGER, "10", false);
 
     private String dbReference;
     private ValueType type;

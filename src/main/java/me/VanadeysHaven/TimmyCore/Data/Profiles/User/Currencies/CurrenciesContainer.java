@@ -1,6 +1,7 @@
 package me.VanadeysHaven.TimmyCore.Data.Profiles.User.Currencies;
 
 import me.VanadeysHaven.TimmyCore.Data.Profiles.DataContainers.DataContainer;
+import me.VanadeysHaven.TimmyCore.Main;
 
 public final class CurrenciesContainer extends DataContainer<Currency> {
 
@@ -16,7 +17,10 @@ public final class CurrenciesContainer extends DataContainer<Currency> {
     public String incrementInt(Currency currency, int incrementBy, String reason){
         super.incrementInt(currency, incrementBy);
 
-        return currency.getColorCode() + "+" + incrementBy + " " + currency.getName() + " (" + reason + ")";
+        if(currency == Currency.COINS)
+            return currency.getColorCode() + "+" + incrementBy + " " + Main.getPlugin().getConfig().getString("currency.currencyName") + " (" + reason + ")";
+        else
+            return currency.getColorCode() + "+" + incrementBy + " " + currency.getName() + " (" + reason + ")";
     }
 
     public boolean hasEnoughBalance(Currency currency, int amount){

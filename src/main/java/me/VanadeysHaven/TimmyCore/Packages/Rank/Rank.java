@@ -1,12 +1,13 @@
 package me.VanadeysHaven.TimmyCore.Packages.Rank;
 
 import lombok.Getter;
+import me.VanadeysHaven.TimmyCore.Main;
 import me.VanadeysHaven.TimmyCore.Utilities.StringUtilities;
 
 @Getter
 public enum Rank {
 
-    NEUROCITIZEN ("3", "Neurocitizen"),
+    PLAYER       ("3", "Player"      ),
     MOD          ("2", "Mod"         ),
     ADMIN        ("c", "Admin"       ),
     SPARKED      ("e", "Sparked"     ),
@@ -21,7 +22,14 @@ public enum Rank {
     }
 
     public String formatTag(){
-        return StringUtilities.colorify("&8[&" + colorCode + rankName + "&8]&r");
+            return StringUtilities.colorify("&8[&" + colorCode + getRankName() + "&8]&r");
+    }
+
+    public String getRankName(){
+        if(this == PLAYER)
+            return Main.getPlugin().getConfig().getString("server.defaultRank");
+        else
+            return rankName;
     }
 
 }

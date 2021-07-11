@@ -1,5 +1,7 @@
 package me.VanadeysHaven.TimmyCore.Data.Profiles.User;
 
+import me.VanadeysHaven.TimmyCore.Utilities.Reload.ReloadManager;
+import me.VanadeysHaven.TimmyCore.Utilities.Reload.Reloadable;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.slf4j.Logger;
@@ -8,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public final class ProfileManager {
+public final class ProfileManager implements Reloadable {
 
     private static ProfileManager instance;
 
@@ -25,6 +27,7 @@ public final class ProfileManager {
 
     private ProfileManager(){
         players = new ArrayList<>();
+        ReloadManager.getInstance().add(this);
     }
 
     public CorePlayer getUser(Player p){
@@ -62,4 +65,13 @@ public final class ProfileManager {
         for(Player p : Bukkit.getOnlinePlayers())
             unload(p.getUniqueId().toString());
     }
+
+    @Override
+    public void reload() {
+        getAll().forEachRemaining(p -> {
+            p.updateAppearance();
+            p.setPlayerListFooter();
+        });
+    }
+
 }

@@ -15,7 +15,7 @@ public enum Setting implements Data {
 
     NICKNAME           ("nickname",           ValueType.STRING,  ""            , true ),
     ID_NICK            ("id_nick",            ValueType.STRING,  ""            , false),
-    RANK               ("rank",               ValueType.STRING,  "NEUROCITIZEN", true ),
+    RANK               ("rank",               ValueType.STRING,  "PLAYER"      , true ),
     PRONOUNS           ("pronouns",           ValueType.STRING,  ""            , true ),
     REQUIRE_TP_REQUEST ("require_tp_request", ValueType.BOOLEAN, "true"        , true );
 

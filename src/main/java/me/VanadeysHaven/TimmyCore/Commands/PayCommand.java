@@ -4,6 +4,7 @@ import me.VanadeysHaven.TimmyCore.Data.Profiles.User.CorePlayer;
 import me.VanadeysHaven.TimmyCore.Data.Profiles.User.Currencies.CurrenciesContainer;
 import me.VanadeysHaven.TimmyCore.Data.Profiles.User.Currencies.Currency;
 import me.VanadeysHaven.TimmyCore.Data.Profiles.User.ProfileManager;
+import me.VanadeysHaven.TimmyCore.Main;
 import me.VanadeysHaven.TimmyCore.Utilities.MessageUtilities;
 import me.VanadeysHaven.TimmyCore.Utilities.MiscUtilities;
 import me.VanadeysHaven.TimmyCore.Utilities.NameUtilities;
@@ -57,8 +58,8 @@ public final class PayCommand implements TabExecutor {
             return true;
         }
         int amount = Integer.parseInt(args[1]);
-        if (!currencies.hasEnoughBalance(Currency.NEUROS, amount)){
-            MessageUtilities.sendMessage(p, "Pay", "You do not have enough Neuros to pay that.", true);
+        if (!currencies.hasEnoughBalance(Currency.COINS, amount)){
+            MessageUtilities.sendMessage(p, "Pay", "You do not have enough " + Main.getPlugin().getConfig().getString("currency.currencyName") + " to pay that.", true);
             return true;
         }
         if(amount < 1){
@@ -66,11 +67,11 @@ public final class PayCommand implements TabExecutor {
             return true;
         }
 
-        currencies.incrementInt(Currency.NEUROS, amount * -1);
-        currenciesTarget.incrementInt(Currency.NEUROS, amount);
+        currencies.incrementInt(Currency.COINS, amount * -1);
+        currenciesTarget.incrementInt(Currency.COINS, amount);
 
-        MessageUtilities.sendMessage(p, "Pay", "You sent &b" + amount + " Neuros &ato " + cpTarget.getFullDisplayName() + "&a!");
-        MessageUtilities.sendMessage(target, "Pay", "You received &b" + amount + " Neuros &afrom " + cp.getFullDisplayName() + "&a!");
+        MessageUtilities.sendMessage(p, "Pay", "You sent &b" + amount + " " + Main.getPlugin().getConfig().getString("currency.currencyName") + " &ato " + cpTarget.getFullDisplayName() + "&a!");
+        MessageUtilities.sendMessage(target, "Pay", "You received &b" + amount + " " + Main.getPlugin().getConfig().getString("currency.currencyName") + " &afrom " + cp.getFullDisplayName() + "&a!");
         target.playSound(target.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 0.5F, 1);
 
         cp.setPlayerListFooter();

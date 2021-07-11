@@ -1,6 +1,7 @@
 server:
   name: "&3&lT&3immy&a&lC&araft"
   shortName: "&3&lT&a&lC"
+  defaultRank: "Player"
 
 currency:
   currencyName: "Coins"

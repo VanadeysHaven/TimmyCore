@@ -3,7 +3,10 @@ package me.VanadeysHaven.TimmyCore.Packages.Warp;
 import me.VanadeysHaven.TimmyCore.Data.Database.Query;
 import me.VanadeysHaven.TimmyCore.Data.Database.QueryExecutor;
 import me.VanadeysHaven.TimmyCore.Data.Database.QueryResult;
+import me.VanadeysHaven.TimmyCore.Main;
 import me.VanadeysHaven.TimmyCore.Packages.Warp.Exceptions.*;
+import me.VanadeysHaven.TimmyCore.Utilities.Reload.ReloadManager;
+import me.VanadeysHaven.TimmyCore.Utilities.Reload.Reloadable;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -12,9 +15,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class WarpManager {
+public final class WarpManager implements Reloadable {
 
-    private static final int MAX_WARPS = 7;
+    private static int MAX_WARPS;
     private static final int MAX_LENGTH = 16;
 
     private ArrayList<Warp> warps;
@@ -22,6 +25,8 @@ public final class WarpManager {
     public WarpManager(){
         this.warps = new ArrayList<>();
         loadAllWarps();
+        loadConfig();
+        ReloadManager.getInstance().add(this);
     }
 
     public Warp getWarp(String name){
@@ -134,4 +139,12 @@ public final class WarpManager {
             warp.save();
     }
 
+    @Override
+    public void reload() {
+        loadConfig();
+    }
+
+    private void loadConfig() {
+        MAX_WARPS = Main.getPlugin().getConfig().getInt("warps.limit");
+    }
 }

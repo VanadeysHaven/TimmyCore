@@ -14,6 +14,7 @@ import me.VanadeysHaven.TimmyCore.Packages.Rank.RankCommand;
 import me.VanadeysHaven.TimmyCore.Packages.Warp.WarpCommand;
 import me.VanadeysHaven.TimmyCore.Timers.OneMinuteTimer;
 import me.VanadeysHaven.TimmyCore.Timers.TenMinuteTimer;
+import me.VanadeysHaven.TimmyCore.Utilities.Reload.ReloadManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -49,7 +50,8 @@ public final class Main extends JavaPlugin {
         Currency.saveToDatabase();
 
         getLogger().info("Registering listeners...");
-        registerEvent(new DeathListener(), new JoinQuitListener(), new ChatListener(), new ServerPingListener(), new EntityExplodeListener(), new BackCommand(), new InteractListener(),
+        ServerPingListener ping = new ServerPingListener();
+        registerEvent(new DeathListener(), new JoinQuitListener(), new ChatListener(), ping, new EntityExplodeListener(), new BackCommand(), new InteractListener(),
                 new ButtonListener());
         DiscordSRV.api.subscribe(discordReadyListener);
 
@@ -76,8 +78,8 @@ public final class Main extends JavaPlugin {
         getServer().getScheduler().scheduleSyncRepeatingTask(this, new OneMinuteTimer(), 0L, 1200L);
         getServer().getScheduler().scheduleSyncRepeatingTask(this, new TenMinuteTimer(), 12000L, 12000L);
 
-//        getLogger().info("Registering crafting recipes...");
-//        new GoldSmelting(getServer(), this);
+        getLogger().info("Registering reloadables...");
+        ReloadManager.getInstance().add(ping);
     }
 
     @Override

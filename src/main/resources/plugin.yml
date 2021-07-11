@@ -40,5 +40,8 @@ commands:
     description: Make a note in chat!
     usage: /note <note>
     aliases: n
+  tcreload:
+    description: Reloads config
+    usage: /tcreload
 depend:
   - DiscordSRV

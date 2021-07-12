@@ -49,6 +49,9 @@ Whispers can be used to privately message people that are online on the server!
 *Quick reply:*
 > You can quickly reply to the last whisper you sent or received using `/r <message...>`.
 
+# NOTES
+You can make a note in chat using `/note <note...>`. This puts that bit of text in the chat for only you to see. - These are **NOT** saved.
+
 # CURRENCY
 The plugin has a currency! By default, these are called coins.
 

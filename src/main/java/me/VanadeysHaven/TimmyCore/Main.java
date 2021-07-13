@@ -8,6 +8,7 @@ import me.VanadeysHaven.TimmyCore.Data.Profiles.User.ProfileManager;
 import me.VanadeysHaven.TimmyCore.Data.Profiles.User.Settings.Setting;
 import me.VanadeysHaven.TimmyCore.Data.Profiles.User.Stats.Stat;
 import me.VanadeysHaven.TimmyCore.Listeners.*;
+import me.VanadeysHaven.TimmyCore.Managers.Confirm.ConfirmCommand;
 import me.VanadeysHaven.TimmyCore.Managers.Interact.InteractListener;
 import me.VanadeysHaven.TimmyCore.Packages.Discord.DiscordReady;
 import me.VanadeysHaven.TimmyCore.Packages.Rank.RankCommand;
@@ -68,6 +69,7 @@ public final class Main extends JavaPlugin {
         getCommand("w").setExecutor(WhisperCommand.getInstance());
         getCommand("note").setExecutor(new NoteCommand());
         getCommand("tcreload").setExecutor(new ReloadCommand());
+        getCommand("confirm").setExecutor(new ConfirmCommand());
 //        getCommand("r").setExecutor(WhisperCommand.getInstance());
 
 

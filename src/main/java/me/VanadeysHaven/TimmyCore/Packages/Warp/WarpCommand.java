@@ -1,13 +1,21 @@
 package me.VanadeysHaven.TimmyCore.Packages.Warp;
 
 import me.VanadeysHaven.TimmyCore.Data.Profiles.User.CorePlayer;
+import me.VanadeysHaven.TimmyCore.Data.Profiles.User.Currencies.Currency;
 import me.VanadeysHaven.TimmyCore.Data.Profiles.User.ProfileManager;
+import me.VanadeysHaven.TimmyCore.Data.Profiles.User.Stats.Stat;
+import me.VanadeysHaven.TimmyCore.Main;
+import me.VanadeysHaven.TimmyCore.Managers.Confirm.PendingConfirmation;
 import me.VanadeysHaven.TimmyCore.Packages.Warp.Exceptions.WarpNotPublicException;
 import me.VanadeysHaven.TimmyCore.Utilities.MessageUtilities;
+import me.VanadeysHaven.TimmyCore.Utilities.StringUtilities;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
@@ -52,10 +60,51 @@ public final class WarpCommand implements TabExecutor {
     }
 
     private boolean buyWarp(Player p) {
-
-
-        pm.getUser(p).setPlayerListFooter();
+        pm.getUser(p).setPendingConfirmation(new Confirm(p));
         return true;
+    }
+
+    private final class Confirm implements PendingConfirmation {
+
+        private CorePlayer cp;
+        private int cost;
+
+        public Confirm(Player p){
+            cp = pm.getUser(p);
+            int slotAmount = cp.getStats().getInt(Stat.WARP_SLOTS);
+            FileConfiguration config = Main.getPlugin().getConfig();
+            cost = config.getInt("warps.cost") + (config.getInt("warps.additionalCost") * slotAmount);
+
+            TextComponent message = new TextComponent(StringUtilities.colorify(StringUtilities.formatMessageWithTag("Warp", "&aAre you sure you want to buy &bone warp slot &afor &b" + cost + " " + Main.getPlugin().getConfig().getString("currency.currencyName") + "&a? ")));
+            TextComponent confirm = new TextComponent(StringUtilities.colorify("&8[&2Confirm&8]"));
+            confirm.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/confirm"));
+            TextComponent cancel = new TextComponent(StringUtilities.colorify("&8[&cCancel&8]"));
+            cancel.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/cancel"));
+
+            message.addExtra(confirm);
+            message.addExtra(" ");
+            message.addExtra(cancel);
+            cp.getPlayer().spigot().sendMessage(message);
+        }
+
+        @Override
+        public void confirm() {
+            if(!cp.getCurrencies().hasEnoughBalance(Currency.COINS, cost)) {
+                MessageUtilities.sendMessage(cp, "Warp", "&aYou do not have enough &b" + Main.getPlugin().getConfig().getString("currency.currencyName") + " &ato buy this!", true);
+                return;
+            }
+
+            cp.getCurrencies().incrementInt(Currency.COINS, cost * -1);
+            cp.getStats().incrementInt(Stat.WARP_SLOTS);
+            cp.setPlayerListFooter();
+            MessageUtilities.sendMessage(cp, "Warp", "&aYou bought &b1 warp slot &afor &b" + cost + " " + Main.getPlugin().getConfig().getString("currency.currencyName") + "&a!");
+        }
+
+
+        @Override
+        public void cancel() {
+            MessageUtilities.sendMessage(cp, "Warp", "Purchase cancelled.");
+        }
     }
 
     private boolean listAllWarps(Player p, boolean listOwn){

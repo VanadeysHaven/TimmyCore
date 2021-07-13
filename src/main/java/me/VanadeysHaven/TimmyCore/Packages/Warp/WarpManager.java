@@ -4,6 +4,8 @@ import lombok.Getter;
 import me.VanadeysHaven.TimmyCore.Data.Database.Query;
 import me.VanadeysHaven.TimmyCore.Data.Database.QueryExecutor;
 import me.VanadeysHaven.TimmyCore.Data.Database.QueryResult;
+import me.VanadeysHaven.TimmyCore.Data.Profiles.User.ProfileManager;
+import me.VanadeysHaven.TimmyCore.Data.Profiles.User.Stats.Stat;
 import me.VanadeysHaven.TimmyCore.Main;
 import me.VanadeysHaven.TimmyCore.Packages.Warp.Exceptions.*;
 import me.VanadeysHaven.TimmyCore.Utilities.Reload.ReloadManager;
@@ -17,6 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class WarpManager implements Reloadable {
+
+    private static final ProfileManager pm = ProfileManager.getInstance();
 
     private static WarpManager instance;
 
@@ -81,13 +85,14 @@ public final class WarpManager implements Reloadable {
     }
 
     public void addWarp(String name, Location location, Player owner, boolean isPublic){
+        int maxAllowed = MAX_WARPS + pm.getUser(owner).getStats().getInt(Stat.WARP_SLOTS);
         if(doesWarpExist(name))
             throw new WarpAlreadyExistsException(name);
         if(name.length() > MAX_LENGTH)
             throw new NameTooLongException(name, MAX_LENGTH);
-        if(getWarpCountForPlayer(owner) >= MAX_WARPS)
+        if(getWarpCountForPlayer(owner) >= maxAllowed)
             if(!owner.isOp())
-                throw new MaxWarpCountExceededException(MAX_WARPS);
+                throw new MaxWarpCountExceededException(maxAllowed);
 
         Warp warp = new Warp(name, location, owner.getUniqueId().toString(), isPublic);
         warps.add(warp);

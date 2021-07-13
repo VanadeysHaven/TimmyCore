@@ -14,6 +14,10 @@ The plugin has a warping system this can be used to create warps and teleport to
 > You can delete a warp by typing `/warp delete <name>`. This will delete the warp with the given name.
 > You can only delete warps you have created yourself.
 
+*Buying additional warp slots:*
+> You can buy additional warp slots using `/warp buy`. Warp slots cost, by default, 500 coins for the first slot, and 550 for the second, third 600... and so on.  
+> Each player starts, by default, with 3 slots.
+
 *Making a warp public/private:*
 > You can make a warp private by typing `/warp setpublic <name> false`, and you can make it public with  `/warp setpublic <name> true`.  
 > When a warp is private, only you can teleport to it.

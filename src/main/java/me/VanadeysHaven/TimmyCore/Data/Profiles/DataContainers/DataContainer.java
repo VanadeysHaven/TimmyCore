@@ -12,7 +12,7 @@ import java.util.HashMap;
 
 public class DataContainer<T extends Data> {
 
-    private String uuid;
+    protected String uuid;
     private HashMap<T, String> values;
     private HashMap<T, CooldownManager> cooldowns;
 

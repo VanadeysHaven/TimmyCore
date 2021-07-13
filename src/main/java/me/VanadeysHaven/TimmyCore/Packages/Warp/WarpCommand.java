@@ -1,5 +1,7 @@
 package me.VanadeysHaven.TimmyCore.Packages.Warp;
 
+import me.VanadeysHaven.TimmyCore.Data.Profiles.User.CorePlayer;
+import me.VanadeysHaven.TimmyCore.Data.Profiles.User.ProfileManager;
 import me.VanadeysHaven.TimmyCore.Packages.Warp.Exceptions.WarpNotPublicException;
 import me.VanadeysHaven.TimmyCore.Utilities.MessageUtilities;
 import org.bukkit.Location;
@@ -16,11 +18,8 @@ import java.util.List;
 
 public final class WarpCommand implements TabExecutor {
 
-    private WarpManager manager;
-
-    public WarpCommand(){
-        this.manager = new WarpManager();
-    }
+    private static final WarpManager manager = WarpManager.getInstance();
+    private static final ProfileManager pm = ProfileManager.getInstance();
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -34,6 +33,7 @@ public final class WarpCommand implements TabExecutor {
             if(args.length == 1) {
                 if (args[0].equalsIgnoreCase("list") || args[0].equalsIgnoreCase("listown")) return listAllWarps(p, args[0].equalsIgnoreCase("listown"));
                 if (args[0].equalsIgnoreCase("reload")) return reload(p);
+                if (args[0].equalsIgnoreCase("buy")) return buyWarp(p);
                 else return teleportToWarp(p, args[0]);
             } else if(args.length == 2){
                 if(args[0].equalsIgnoreCase("create")) return createNewWarp(p, args[1]);
@@ -48,6 +48,13 @@ public final class WarpCommand implements TabExecutor {
             MessageUtilities.sendMessage(p, "Warp", e.getMessage(), true);
         }
 
+        return true;
+    }
+
+    private boolean buyWarp(Player p) {
+
+
+        pm.getUser(p).setPlayerListFooter();
         return true;
     }
 
@@ -75,6 +82,7 @@ public final class WarpCommand implements TabExecutor {
         String message = MessageFormat.format("&aNew warp &b{0} &acreated at &b({1},{2},{3})&a!", warp, location.getBlockX(), location.getBlockY(), location.getBlockZ());
         MessageUtilities.sendMessage(p, "Warp", message);
         getListContainer().clear();
+        pm.getUser(p).setPlayerListFooter();
         return true;
     }
 
@@ -83,6 +91,7 @@ public final class WarpCommand implements TabExecutor {
         manager.deleteWarp(warp, p);
         MessageUtilities.sendMessage(p, "Warp", "&aWarp &b" + warp + " &ahas been deleted.");
         getListContainer().clear();
+        pm.getUser(p).setPlayerListFooter();
         return true;
     }
 
@@ -100,6 +109,7 @@ public final class WarpCommand implements TabExecutor {
             manager.loadAllWarps();
             getListContainer().clear();
             MessageUtilities.sendMessage(p, "Warp", "&aAll warps have been reloaded.");
+            pm.getAll().forEachRemaining(CorePlayer::setPlayerListFooter);
             return true;
         } else {
             MessageUtilities.sendMessage(p, "Warp", "&aYou don't have permission to do this!", true);
@@ -125,6 +135,7 @@ public final class WarpCommand implements TabExecutor {
                 list.add("listown");
                 list.add("delete");
                 list.add("setpublic");
+                list.add("buy");
                 if(p.isOp())
                     list.add("reload");
 

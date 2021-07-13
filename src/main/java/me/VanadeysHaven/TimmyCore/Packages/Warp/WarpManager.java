@@ -1,5 +1,6 @@
 package me.VanadeysHaven.TimmyCore.Packages.Warp;
 
+import lombok.Getter;
 import me.VanadeysHaven.TimmyCore.Data.Database.Query;
 import me.VanadeysHaven.TimmyCore.Data.Database.QueryExecutor;
 import me.VanadeysHaven.TimmyCore.Data.Database.QueryResult;
@@ -17,12 +18,21 @@ import java.util.List;
 
 public final class WarpManager implements Reloadable {
 
-    private static int MAX_WARPS;
-    private static final int MAX_LENGTH = 16;
+    private static WarpManager instance;
+
+    public static WarpManager getInstance() {
+        if(instance == null)
+            instance = new WarpManager();
+
+        return instance;
+    }
+
+    @Getter private int MAX_WARPS;
+    private final int MAX_LENGTH = 16;
 
     private ArrayList<Warp> warps;
 
-    public WarpManager(){
+    private WarpManager(){
         this.warps = new ArrayList<>();
         loadAllWarps();
         loadConfig();

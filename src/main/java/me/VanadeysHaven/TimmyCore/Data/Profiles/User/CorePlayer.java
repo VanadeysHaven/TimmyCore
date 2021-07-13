@@ -12,8 +12,10 @@ import me.VanadeysHaven.TimmyCore.Data.Profiles.User.Stats.Stat;
 import me.VanadeysHaven.TimmyCore.Data.Profiles.User.Stats.StatsContainer;
 import me.VanadeysHaven.TimmyCore.Data.Profiles.User.Stats.StatsSapling;
 import me.VanadeysHaven.TimmyCore.Main;
+import me.VanadeysHaven.TimmyCore.Managers.Confirm.PendingConfirmation;
 import me.VanadeysHaven.TimmyCore.Managers.Interact.PendingInteract;
 import me.VanadeysHaven.TimmyCore.Packages.Rank.Rank;
+import me.VanadeysHaven.TimmyCore.Packages.Warp.WarpManager;
 import me.VanadeysHaven.TimmyCore.Timers.CurrencyTimerDefinition;
 import me.VanadeysHaven.TimmyCore.Utilities.MessageUtilities;
 import me.VanadeysHaven.TimmyCore.Utilities.StringUtilities;
@@ -42,6 +44,7 @@ public final class CorePlayer {
     private Team team;
 
     @Setter private PendingInteract pendingInteract;
+    @Setter private PendingConfirmation pendingConfirmation;
 
     String nickname;
     String rankTag;
@@ -90,8 +93,8 @@ public final class CorePlayer {
     }
 
     public void setPlayerListFooter(){
-        String format = " \n&8--- &a&lMY PROFILE &8---\n&6" + Main.getPlugin().getConfig().getString("currency.currencyName") + "&8: &b{0}";
-        format = MessageFormat.format(format, getCurrencies().getString(Currency.COINS));
+        String format = " \n&8--- &a&lMY PROFILE &8---\n&6" + Main.getPlugin().getConfig().getString("currency.currencyName") + "&8: &b{0} &8- &aWarps&8: &b{1}&8/&b{2}";
+        format = MessageFormat.format(format, getCurrencies().getString(Currency.COINS), WarpManager.getInstance().getWarpCountForPlayer(player), getStats().getInt(Stat.WARP_SLOTS) + WarpManager.getInstance().getMAX_WARPS());
         format = StringUtilities.colorify(format);
 
         player.setPlayerListFooter(format);

@@ -8,6 +8,8 @@ currency:
 
 warps:
   limit: 3
+  cost: 500
+  additionalCost: 50
 
 motd:
   format: "&8[&61.17&8] » $name\n$shortName &8» &b&o$motd"

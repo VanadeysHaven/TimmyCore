@@ -10,6 +10,6 @@ public final class MaxWarpCountExceededException extends RuntimeException {
 
     @Override
     public String getMessage() {
-        return "&aYou can only create a maximum of &b" + maxAllowed + " &awarps.";
+        return "&aYou can only create a maximum of &b" + maxAllowed + " &awarps. You can buy more slots using &b/warp buy&a.";
     }
 }

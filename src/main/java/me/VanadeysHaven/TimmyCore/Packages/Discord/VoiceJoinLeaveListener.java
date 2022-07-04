@@ -4,7 +4,6 @@ import github.scarsz.discordsrv.dependencies.jda.api.events.guild.voice.GuildVoi
 import github.scarsz.discordsrv.dependencies.jda.api.events.guild.voice.GuildVoiceLeaveEvent;
 import github.scarsz.discordsrv.dependencies.jda.api.events.guild.voice.GuildVoiceMoveEvent;
 import github.scarsz.discordsrv.dependencies.jda.api.hooks.ListenerAdapter;
-import me.VanadeysHaven.TimmyCore.Utilities.Constants;
 import me.VanadeysHaven.TimmyCore.Utilities.StringUtilities;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
@@ -13,33 +12,17 @@ public final class VoiceJoinLeaveListener extends ListenerAdapter {
 
     @Override
     public void onGuildVoiceJoin(@NotNull GuildVoiceJoinEvent event) {
-        if(event.getChannelJoined().getId().equals(Constants.DISCORD_VOICE_ID)){
-            sendJoin(event.getMember().getEffectiveName());
-        }
+        Bukkit.broadcastMessage(StringUtilities.colorify("&8[&bDiscord&8] » &b" + event.getMember().getEffectiveName() + " &2joined &avoice channel &b" + event.getChannelJoined().getName() + "&a."));
     }
 
     @Override
     public void onGuildVoiceLeave(@NotNull GuildVoiceLeaveEvent event) {
-        if(event.getChannelLeft().getId().equals(Constants.DISCORD_VOICE_ID)){
-            sendLeave(event.getMember().getEffectiveName());
-        }
+        Bukkit.broadcastMessage(StringUtilities.colorify("&8[&bDiscord&8] » &b" + event.getMember().getEffectiveName() + " &cleft &avoice channel &b" + event.getChannelLeft().getName() + "&a."));
     }
 
     @Override
     public void onGuildVoiceMove(@NotNull GuildVoiceMoveEvent event) {
-        if(event.getChannelJoined().getId().equals(Constants.DISCORD_VOICE_ID)){
-            sendJoin(event.getMember().getEffectiveName());
-        } else if(event.getChannelLeft().getId().equals(Constants.DISCORD_VOICE_ID)){
-            sendLeave(event.getMember().getEffectiveName());
-        }
-    }
-
-    public void sendJoin(String name){
-        Bukkit.broadcastMessage(StringUtilities.colorify("&8[&bDiscord&8] » &b" + name + " &2joined &athe voice channel."));
-    }
-
-    public void sendLeave(String name){
-        Bukkit.broadcastMessage(StringUtilities.colorify("&8[&bDiscord&8] » &b" + name + " &cleft &athe voice channel."));
+        Bukkit.broadcastMessage(StringUtilities.colorify("&8[&bDiscord&8] » &b" + event.getMember().getEffectiveName() + " &6moved &afrom voice channel &b" + event.getChannelLeft().getName() + " &ato voice channel &b" + event.getChannelJoined().getName() + "&a."));
     }
 
 }

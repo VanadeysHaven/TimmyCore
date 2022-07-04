@@ -1,9 +1,15 @@
 package me.VanadeysHaven.TimmyCore.Packages.Warp;
 
+import lombok.Getter;
 import me.VanadeysHaven.TimmyCore.Data.Database.Query;
 import me.VanadeysHaven.TimmyCore.Data.Database.QueryExecutor;
 import me.VanadeysHaven.TimmyCore.Data.Database.QueryResult;
+import me.VanadeysHaven.TimmyCore.Data.Profiles.User.ProfileManager;
+import me.VanadeysHaven.TimmyCore.Data.Profiles.User.Stats.Stat;
+import me.VanadeysHaven.TimmyCore.Main;
 import me.VanadeysHaven.TimmyCore.Packages.Warp.Exceptions.*;
+import me.VanadeysHaven.TimmyCore.Utilities.Reload.ReloadManager;
+import me.VanadeysHaven.TimmyCore.Utilities.Reload.Reloadable;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -12,16 +18,29 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class WarpManager {
+public final class WarpManager implements Reloadable {
 
-    private static final int MAX_WARPS = 7;
-    private static final int MAX_LENGTH = 16;
+    private static final ProfileManager pm = ProfileManager.getInstance();
+
+    private static WarpManager instance;
+
+    public static WarpManager getInstance() {
+        if(instance == null)
+            instance = new WarpManager();
+
+        return instance;
+    }
+
+    @Getter private int MAX_WARPS;
+    private final int MAX_LENGTH = 16;
 
     private ArrayList<Warp> warps;
 
-    public WarpManager(){
+    private WarpManager(){
         this.warps = new ArrayList<>();
         loadAllWarps();
+        loadConfig();
+        ReloadManager.getInstance().add(this);
     }
 
     public Warp getWarp(String name){
@@ -66,13 +85,14 @@ public final class WarpManager {
     }
 
     public void addWarp(String name, Location location, Player owner, boolean isPublic){
+        int maxAllowed = MAX_WARPS + pm.getUser(owner).getStats().getInt(Stat.WARP_SLOTS);
         if(doesWarpExist(name))
             throw new WarpAlreadyExistsException(name);
         if(name.length() > MAX_LENGTH)
             throw new NameTooLongException(name, MAX_LENGTH);
-        if(getWarpCountForPlayer(owner) >= MAX_WARPS)
+        if(getWarpCountForPlayer(owner) >= maxAllowed)
             if(!owner.isOp())
-                throw new MaxWarpCountExceededException(MAX_WARPS);
+                throw new MaxWarpCountExceededException(maxAllowed);
 
         Warp warp = new Warp(name, location, owner.getUniqueId().toString(), isPublic);
         warps.add(warp);
@@ -134,4 +154,12 @@ public final class WarpManager {
             warp.save();
     }
 
+    @Override
+    public void reload() {
+        loadConfig();
+    }
+
+    private void loadConfig() {
+        MAX_WARPS = Main.getPlugin().getConfig().getInt("warps.limit");
+    }
 }

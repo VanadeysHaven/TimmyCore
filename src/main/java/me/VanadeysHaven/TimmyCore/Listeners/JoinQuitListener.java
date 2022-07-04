@@ -27,7 +27,7 @@ public final class JoinQuitListener implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         registerPlayer(event.getPlayer().getUniqueId().toString(), event.getPlayer().getName());
         CorePlayer cp = pm.getUser(event.getPlayer());
-        event.setJoinMessage(StringUtilities.colorify(StringUtilities.formatMessageWithTag("Join", formatName(cp) + " &ajoined the game.")));
+        event.setJoinMessage(StringUtilities.colorify(StringUtilities.formatMessageWithTag("Join", formatName(cp) + " &2joined &athe game.")));
 
         Iterator<CorePlayer> players = pm.getAll();
         while(players.hasNext())
@@ -40,7 +40,7 @@ public final class JoinQuitListener implements Listener {
     public void onQuit(PlayerQuitEvent event) {
         CorePlayer cp = pm.getUser(event.getPlayer());
         WhisperCommand.getInstance().logout(cp);
-        event.setQuitMessage(StringUtilities.colorify(StringUtilities.formatMessageWithTag("Quit", formatName(cp) + " &aleft the game.")));
+        event.setQuitMessage(StringUtilities.colorify(StringUtilities.formatMessageWithTag("Quit", formatName(cp) + " &cleft &athe game.")));
         pm.unload(event.getPlayer().getUniqueId().toString());
 
         Main.getPlugin().getServer().getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () -> {

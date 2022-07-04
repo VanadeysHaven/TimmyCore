@@ -11,14 +11,15 @@ import me.VanadeysHaven.TimmyCore.Data.Profiles.User.Settings.SettingsSapling;
 import me.VanadeysHaven.TimmyCore.Data.Profiles.User.Stats.Stat;
 import me.VanadeysHaven.TimmyCore.Data.Profiles.User.Stats.StatsContainer;
 import me.VanadeysHaven.TimmyCore.Data.Profiles.User.Stats.StatsSapling;
+import me.VanadeysHaven.TimmyCore.Main;
+import me.VanadeysHaven.TimmyCore.Managers.Confirm.PendingConfirmation;
 import me.VanadeysHaven.TimmyCore.Managers.Interact.PendingInteract;
 import me.VanadeysHaven.TimmyCore.Packages.Rank.Rank;
+import me.VanadeysHaven.TimmyCore.Packages.Warp.WarpManager;
 import me.VanadeysHaven.TimmyCore.Timers.CurrencyTimerDefinition;
-import me.VanadeysHaven.TimmyCore.Utilities.Constants;
 import me.VanadeysHaven.TimmyCore.Utilities.MessageUtilities;
 import me.VanadeysHaven.TimmyCore.Utilities.StringUtilities;
 import org.bukkit.Bukkit;
-import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
@@ -43,6 +44,7 @@ public final class CorePlayer {
     private Team team;
 
     @Setter private PendingInteract pendingInteract;
+    @Setter private PendingConfirmation pendingConfirmation;
 
     String nickname;
     String rankTag;
@@ -84,15 +86,15 @@ public final class CorePlayer {
 
     public void setPlayerListHeader(){
         String format = "&aWelcome to {0}&a, {1} {2}&a!\n&aPlayers online: &b{3}\n ";
-        format = MessageFormat.format(format, Constants.LONG_SERVER_NAME, rankTag, nickname, Bukkit.getOnlinePlayers().size());
+        format = MessageFormat.format(format, Main.getPlugin().getConfig().getString("server.name"), rankTag, nickname, Bukkit.getOnlinePlayers().size());
         format = StringUtilities.colorify(format);
 
         player.setPlayerListHeader(format);
     }
 
     public void setPlayerListFooter(){
-        String format = " \n&8--- &a&lMY PROFILE &8---\n&6Neuros&8: &b{0}";
-        format = MessageFormat.format(format, getCurrencies().getString(Currency.NEUROS));
+        String format = " \n&8--- &a&lMY PROFILE &8---\n&6" + Main.getPlugin().getConfig().getString("currency.currencyName") + "&8: &b{0} &8- &aWarps&8: &b{1}&8/&b{2}";
+        format = MessageFormat.format(format, getCurrencies().getString(Currency.COINS), WarpManager.getInstance().getWarpCountForPlayer(player), getStats().getInt(Stat.WARP_SLOTS) + WarpManager.getInstance().getMAX_WARPS());
         format = StringUtilities.colorify(format);
 
         player.setPlayerListFooter(format);
@@ -138,7 +140,7 @@ public final class CorePlayer {
             int curTime = stats.getInt(currencyTimer);
             if(curTime == 1) {
                 MessageUtilities.sendMessage(player, getCurrencies().incrementInt(definition.getCurrency(), definition.getIncrease(), currencyTimer.getDefaultValue() + " minutes online"));
-                player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 0.5F, 1);
+//                player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 0.5F, 1);
                 stats.setString(currencyTimer, currencyTimer.getDefaultValue());
             } else {
                 stats.incrementInt(currencyTimer, -1, false);

@@ -1,6 +1,31 @@
+server:
+  name: "&3&lT&3immy&a&lC&araft"
+  shortName: "&3&lT&a&lC"
+  defaultRank: "Player"
+
+currency:
+  currencyName: "Coins"
+
+warps:
+  limit: 3
+  cost: 500
+  additionalCost: 50
+
+motd:
+  format: "&8[&61.17&8] » $name\n$shortName &8» &b&o$motd"
+  motds:
+    - "PUPPIES!!!"
+    - "Mmm... Blocky..."
+    - "Now with memes!"
+    - "Est. 1986"
+    - "Now with Cheese!"
+    - "Hello!"
+    - "In case of fire; yell at Timmy!"
+
 mysql:
-  host: your.host.here
+  host: "your.host.here"
   port: 3306
-  database: your_database_name
-  username: your_username
-  password: your_password
+  database: "your_database_name"
+  username: "your_username"
+  password: "your_password"
+

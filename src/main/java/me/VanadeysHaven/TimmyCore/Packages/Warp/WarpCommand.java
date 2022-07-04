@@ -1,11 +1,21 @@
 package me.VanadeysHaven.TimmyCore.Packages.Warp;
 
+import me.VanadeysHaven.TimmyCore.Data.Profiles.User.CorePlayer;
+import me.VanadeysHaven.TimmyCore.Data.Profiles.User.Currencies.Currency;
+import me.VanadeysHaven.TimmyCore.Data.Profiles.User.ProfileManager;
+import me.VanadeysHaven.TimmyCore.Data.Profiles.User.Stats.Stat;
+import me.VanadeysHaven.TimmyCore.Main;
+import me.VanadeysHaven.TimmyCore.Managers.Confirm.PendingConfirmation;
 import me.VanadeysHaven.TimmyCore.Packages.Warp.Exceptions.WarpNotPublicException;
 import me.VanadeysHaven.TimmyCore.Utilities.MessageUtilities;
+import me.VanadeysHaven.TimmyCore.Utilities.StringUtilities;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
@@ -16,11 +26,8 @@ import java.util.List;
 
 public final class WarpCommand implements TabExecutor {
 
-    private WarpManager manager;
-
-    public WarpCommand(){
-        this.manager = new WarpManager();
-    }
+    private static final WarpManager manager = WarpManager.getInstance();
+    private static final ProfileManager pm = ProfileManager.getInstance();
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -34,6 +41,7 @@ public final class WarpCommand implements TabExecutor {
             if(args.length == 1) {
                 if (args[0].equalsIgnoreCase("list") || args[0].equalsIgnoreCase("listown")) return listAllWarps(p, args[0].equalsIgnoreCase("listown"));
                 if (args[0].equalsIgnoreCase("reload")) return reload(p);
+                if (args[0].equalsIgnoreCase("buy")) return buyWarp(p);
                 else return teleportToWarp(p, args[0]);
             } else if(args.length == 2){
                 if(args[0].equalsIgnoreCase("create")) return createNewWarp(p, args[1]);
@@ -49,6 +57,54 @@ public final class WarpCommand implements TabExecutor {
         }
 
         return true;
+    }
+
+    private boolean buyWarp(Player p) {
+        pm.getUser(p).setPendingConfirmation(new Confirm(p));
+        return true;
+    }
+
+    private final class Confirm implements PendingConfirmation {
+
+        private CorePlayer cp;
+        private int cost;
+
+        public Confirm(Player p){
+            cp = pm.getUser(p);
+            int slotAmount = cp.getStats().getInt(Stat.WARP_SLOTS);
+            FileConfiguration config = Main.getPlugin().getConfig();
+            cost = config.getInt("warps.cost") + (config.getInt("warps.additionalCost") * slotAmount);
+
+            TextComponent message = new TextComponent(StringUtilities.colorify(StringUtilities.formatMessageWithTag("Warp", "&aAre you sure you want to buy &bone warp slot &afor &b" + cost + " " + Main.getPlugin().getConfig().getString("currency.currencyName") + "&a? ")));
+            TextComponent confirm = new TextComponent(StringUtilities.colorify("&8[&2Confirm&8]"));
+            confirm.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/confirm"));
+            TextComponent cancel = new TextComponent(StringUtilities.colorify("&8[&cCancel&8]"));
+            cancel.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/cancel"));
+
+            message.addExtra(confirm);
+            message.addExtra(" ");
+            message.addExtra(cancel);
+            cp.getPlayer().spigot().sendMessage(message);
+        }
+
+        @Override
+        public void confirm() {
+            if(!cp.getCurrencies().hasEnoughBalance(Currency.COINS, cost)) {
+                MessageUtilities.sendMessage(cp, "Warp", "&aYou do not have enough &b" + Main.getPlugin().getConfig().getString("currency.currencyName") + " &ato buy this!", true);
+                return;
+            }
+
+            cp.getCurrencies().incrementInt(Currency.COINS, cost * -1);
+            cp.getStats().incrementInt(Stat.WARP_SLOTS);
+            cp.setPlayerListFooter();
+            MessageUtilities.sendMessage(cp, "Warp", "&aYou bought &b1 warp slot &afor &b" + cost + " " + Main.getPlugin().getConfig().getString("currency.currencyName") + "&a!");
+        }
+
+
+        @Override
+        public void cancel() {
+            MessageUtilities.sendMessage(cp, "Warp", "Purchase cancelled.");
+        }
     }
 
     private boolean listAllWarps(Player p, boolean listOwn){
@@ -75,6 +131,7 @@ public final class WarpCommand implements TabExecutor {
         String message = MessageFormat.format("&aNew warp &b{0} &acreated at &b({1},{2},{3})&a!", warp, location.getBlockX(), location.getBlockY(), location.getBlockZ());
         MessageUtilities.sendMessage(p, "Warp", message);
         getListContainer().clear();
+        pm.getUser(p).setPlayerListFooter();
         return true;
     }
 
@@ -83,6 +140,7 @@ public final class WarpCommand implements TabExecutor {
         manager.deleteWarp(warp, p);
         MessageUtilities.sendMessage(p, "Warp", "&aWarp &b" + warp + " &ahas been deleted.");
         getListContainer().clear();
+        pm.getUser(p).setPlayerListFooter();
         return true;
     }
 
@@ -100,6 +158,7 @@ public final class WarpCommand implements TabExecutor {
             manager.loadAllWarps();
             getListContainer().clear();
             MessageUtilities.sendMessage(p, "Warp", "&aAll warps have been reloaded.");
+            pm.getAll().forEachRemaining(CorePlayer::setPlayerListFooter);
             return true;
         } else {
             MessageUtilities.sendMessage(p, "Warp", "&aYou don't have permission to do this!", true);
@@ -125,6 +184,7 @@ public final class WarpCommand implements TabExecutor {
                 list.add("listown");
                 list.add("delete");
                 list.add("setpublic");
+                list.add("buy");
                 if(p.isOp())
                     list.add("reload");
 

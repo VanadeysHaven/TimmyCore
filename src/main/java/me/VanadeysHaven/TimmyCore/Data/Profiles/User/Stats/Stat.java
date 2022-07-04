@@ -13,7 +13,8 @@ import java.util.ArrayList;
 @Getter
 public enum Stat implements Data {
 
-    NEURO_TIMER("neuro_timer", ValueType.INTEGER, "10", false);
+    COINS_TIMER("coins_timer", ValueType.INTEGER, "10", false),
+    WARP_SLOTS ("warp_slots",  ValueType.INTEGER, "-1", true );
 
     private String dbReference;
     private ValueType type;
@@ -84,7 +85,7 @@ public enum Stat implements Data {
 
     @Override
     public int getMinBound() {
-        return 0;
+        return -1;
     }
 
     @Override

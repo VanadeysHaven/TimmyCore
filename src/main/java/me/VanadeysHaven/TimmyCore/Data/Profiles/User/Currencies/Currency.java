@@ -14,7 +14,7 @@ import java.util.ArrayList;
 @Getter
 public enum Currency implements Data {
 
-    NEUROS("neuros", "Neuros", "6", ValueType.INTEGER, "0");
+    COINS ("coins", "Coins", "6", ValueType.INTEGER, "0");
 
     private String dbReference;
     private String name;

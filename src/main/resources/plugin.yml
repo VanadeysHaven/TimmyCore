@@ -1,7 +1,7 @@
 name: TimmyCore
 version: 0.1
 main: me.VanadeysHaven.TimmyCore.Main
-author: Cooltimmetje
+author: VanadeysHaven
 prefix: TimmyCore
 api-version: 1.16
 commands:
@@ -40,7 +40,13 @@ commands:
     description: Make a note in chat!
     usage: /note <note>
     aliases: n
+  tcreload:
+    description: Reloads config
+    usage: /tcreload
+  confirm:
+    description: Confirms action
+    usage: /confirm
+    aliases: cancel
+
 depend:
   - DiscordSRV
-  - Citizens
-  - HolographicDisplays
